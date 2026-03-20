@@ -12,7 +12,7 @@ slog is built in four phases that follow its natural dependency chain: core logi
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Core Foundation** - Fully functional in-memory logger with level filtering, child loggers, and plugin pipeline — no I/O, no transports
+- [x] **Phase 1: Core Foundation** - Fully functional in-memory logger with level filtering, child loggers, and plugin pipeline — no I/O, no transports (completed 2026-03-20)
 - [ ] **Phase 2: Transport System** - Console, pretty, and HTTP batch transports with buffer-then-flush pattern
 - [ ] **Phase 3: Hono Integration** - slog/hono subpath export with per-request context and Cloudflare Workers waitUntil flush
 - [ ] **Phase 4: Packaging and Publishing** - Correct exports map, TypeScript declarations, and dual publish to npm and JSR
@@ -75,7 +75,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Core Foundation | 1/2 | In Progress|  |
+| 1. Core Foundation | 2/2 | Complete   | 2026-03-20 |
 | 2. Transport System | 0/TBD | Not started | - |
 | 3. Hono Integration | 0/TBD | Not started | - |
 | 4. Packaging and Publishing | 0/TBD | Not started | - |

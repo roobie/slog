@@ -19,10 +19,10 @@
 
 - [x] **PLUG-01**: Middleware pipeline for transforming/filtering log entries
 - [x] **PLUG-02**: Plugins can modify entries, filter (return null to drop), or enrich
-- [ ] **PLUG-03**: Built-in error serialization plugin (detects Error objects, extracts name/message/stack)
-- [ ] **PLUG-04**: Built-in redaction plugin (mask sensitive fields by key pattern)
-- [ ] **PLUG-05**: Built-in level filter plugin
-- [ ] **PLUG-06**: Built-in field enrichment plugin (add static fields to all entries)
+- [x] **PLUG-03**: Built-in error serialization plugin (detects Error objects, extracts name/message/stack)
+- [x] **PLUG-04**: Built-in redaction plugin (mask sensitive fields by key pattern)
+- [x] **PLUG-05**: Built-in level filter plugin
+- [x] **PLUG-06**: Built-in field enrichment plugin (add static fields to all entries)
 
 ### Transports
 
@@ -96,10 +96,10 @@
 | CORE-07 | Phase 1 | Complete |
 | PLUG-01 | Phase 1 | Complete |
 | PLUG-02 | Phase 1 | Complete |
-| PLUG-03 | Phase 1 | Pending |
-| PLUG-04 | Phase 1 | Pending |
-| PLUG-05 | Phase 1 | Pending |
-| PLUG-06 | Phase 1 | Pending |
+| PLUG-03 | Phase 1 | Complete |
+| PLUG-04 | Phase 1 | Complete |
+| PLUG-05 | Phase 1 | Complete |
+| PLUG-06 | Phase 1 | Complete |
 | TRAN-01 | Phase 2 | Pending |
 | TRAN-02 | Phase 2 | Pending |
 | TRAN-03 | Phase 2 | Pending |
