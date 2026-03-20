@@ -29,7 +29,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. `withContext()` returns a child logger whose entries include the parent's context fields merged with its own; mutating the parent's context object after child creation does not affect the child
   4. A plugin returning `null` drops the entry from all downstream processing; a plugin can modify or enrich entry fields
   5. Built-in plugins (error serializer, redaction, level filter, field enrichment) are importable and usable without custom code
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Project setup, types, levels, and core logger with plugin pipeline
+- [ ] 01-02-PLAN.md — Built-in plugins (error serializer, redaction, level filter, field enrichment)
 
 ### Phase 2: Transport System
 **Goal**: Users can route log entries to stdout (JSON), a human-readable pretty output, or an HTTP endpoint — all via the buffer-then-flush pattern
@@ -71,7 +75,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Core Foundation | 0/TBD | Not started | - |
+| 1. Core Foundation | 0/2 | Planning complete | - |
 | 2. Transport System | 0/TBD | Not started | - |
 | 3. Hono Integration | 0/TBD | Not started | - |
 | 4. Packaging and Publishing | 0/TBD | Not started | - |
