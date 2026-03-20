@@ -7,18 +7,18 @@
 
 ### Core Logger
 
-- [ ] **CORE-01**: Logger supports 6 levels: trace, debug, info, warn, error, fatal
-- [ ] **CORE-02**: Level gate is the first operation — zero allocation for disabled levels
-- [ ] **CORE-03**: Object-only API: `log.info({ message: 'text', ...data })`
-- [ ] **CORE-04**: Consistent log entry schema: level, timestamp, message, context, data
-- [ ] **CORE-05**: `withContext()` creates child logger with merged immutable context
-- [ ] **CORE-06**: Logger factory with configurable minimum level and defaults
-- [ ] **CORE-07**: Zero-config startup: `createLogger()` works with no arguments
+- [x] **CORE-01**: Logger supports 6 levels: trace, debug, info, warn, error, fatal
+- [x] **CORE-02**: Level gate is the first operation — zero allocation for disabled levels
+- [x] **CORE-03**: Object-only API: `log.info({ message: 'text', ...data })`
+- [x] **CORE-04**: Consistent log entry schema: level, timestamp, message, context, data
+- [x] **CORE-05**: `withContext()` creates child logger with merged immutable context
+- [x] **CORE-06**: Logger factory with configurable minimum level and defaults
+- [x] **CORE-07**: Zero-config startup: `createLogger()` works with no arguments
 
 ### Plugin Pipeline
 
-- [ ] **PLUG-01**: Middleware pipeline for transforming/filtering log entries
-- [ ] **PLUG-02**: Plugins can modify entries, filter (return null to drop), or enrich
+- [x] **PLUG-01**: Middleware pipeline for transforming/filtering log entries
+- [x] **PLUG-02**: Plugins can modify entries, filter (return null to drop), or enrich
 - [ ] **PLUG-03**: Built-in error serialization plugin (detects Error objects, extracts name/message/stack)
 - [ ] **PLUG-04**: Built-in redaction plugin (mask sensitive fields by key pattern)
 - [ ] **PLUG-05**: Built-in level filter plugin
@@ -87,15 +87,15 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CORE-01 | Phase 1 | Pending |
-| CORE-02 | Phase 1 | Pending |
-| CORE-03 | Phase 1 | Pending |
-| CORE-04 | Phase 1 | Pending |
-| CORE-05 | Phase 1 | Pending |
-| CORE-06 | Phase 1 | Pending |
-| CORE-07 | Phase 1 | Pending |
-| PLUG-01 | Phase 1 | Pending |
-| PLUG-02 | Phase 1 | Pending |
+| CORE-01 | Phase 1 | Complete |
+| CORE-02 | Phase 1 | Complete |
+| CORE-03 | Phase 1 | Complete |
+| CORE-04 | Phase 1 | Complete |
+| CORE-05 | Phase 1 | Complete |
+| CORE-06 | Phase 1 | Complete |
+| CORE-07 | Phase 1 | Complete |
+| PLUG-01 | Phase 1 | Complete |
+| PLUG-02 | Phase 1 | Complete |
 | PLUG-03 | Phase 1 | Pending |
 | PLUG-04 | Phase 1 | Pending |
 | PLUG-05 | Phase 1 | Pending |
