@@ -1,0 +1,28 @@
+{
+  "name": "slog",
+  "version": "1.0.0",
+  "description": "A dead-simple structured logger for ECMAScript runtimes",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "vitest run",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roobie/slog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roobie/slog/issues"
+  },
+  "homepage": "https://github.com/roobie/slog#readme",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  }
+}
