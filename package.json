@@ -1,6 +1,6 @@
 {
   "name": "@bjro/slog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A dead-simple structured logger for ECMAScript runtimes",
   "type": "module",
   "exports": {
@@ -13,7 +13,11 @@
       "import": "./src/hono.ts"
     }
   },
-  "files": ["src", "LICENSE", "README.md"],
+  "files": [
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
   "publishConfig": {
     "access": "public"
   },
