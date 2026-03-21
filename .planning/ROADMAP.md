@@ -76,6 +76,11 @@ Plans:
   2. The published package has zero entries in `dependencies` (devDependencies and peerDependencies are exempt)
   3. `jsr publish --dry-run` passes with no slow types errors — all public API functions have explicit return type annotations
   4. A single CI workflow triggered by git tag publishes to both npm and JSR atomically; if either registry rejects the publish, the workflow fails
+**Plans**: 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Package config (package.json, tsconfig.json, jsr.json), JSR slow types fix, README
+- [ ] 04-02-PLAN.md — GitHub Actions publish workflow, attw/jsr verification, human approval
 
 ## Progress
 
@@ -87,4 +92,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Core Foundation | 2/2 | Complete   | 2026-03-20 |
 | 2. Transport System | 3/3 | Complete   | 2026-03-21 |
 | 3. Hono Integration | 2/2 | Complete   | 2026-03-21 |
-| 4. Packaging and Publishing | 0/TBD | Not started | - |
+| 4. Packaging and Publishing | 0/2 | Planning complete | - |
