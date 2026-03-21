@@ -23,10 +23,11 @@ Structured logging that works everywhere with zero configuration — import, cre
 - ✓ Pretty console transport (ANSI colors, logfmt key=value) — Phase 2
 - ✓ HTTP batch transport (NDJSON POST with retry) — Phase 2
 
+- ✓ Hono middleware integration (`slog/hono`) with per-request context — Phase 3
+- ✓ Cloudflare Workers support (waitUntil via getRuntimeKey guard) — Phase 3
+- ✓ Subpath exports: `slog` (core), `slog/hono` (middleware) — Phase 3
+
 ### Active
-- [ ] Hono middleware integration (`slog/hono`) with per-request context
-- [ ] Cloudflare Workers support (waitUntil, cf-ray, executionCtx)
-- [ ] Subpath exports: `slog` (core), `slog/hono` (middleware)
 - [ ] Dual publish to npm and JSR
 - [ ] Zero dependencies
 - [ ] Full test coverage
@@ -65,4 +66,4 @@ The package targets modern runtimes exclusively — no CommonJS, no legacy Node 
 | Buffer-then-flush over immediate write | Aligns with serverless (Workers) execution model and enables batch transports efficiently | — Pending |
 
 ---
-*Last updated: 2026-03-21 after Phase 2 completion*
+*Last updated: 2026-03-21 after Phase 3 completion*
