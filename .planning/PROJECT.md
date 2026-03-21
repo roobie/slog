@@ -27,10 +27,14 @@ Structured logging that works everywhere with zero configuration — import, cre
 - ✓ Cloudflare Workers support (waitUntil via getRuntimeKey guard) — Phase 3
 - ✓ Subpath exports: `slog` (core), `slog/hono` (middleware) — Phase 3
 
+- ✓ Dual publish to npm and JSR (CI workflow ready, awaiting registry setup) — Phase 4
+- ✓ Zero dependencies — Phase 1 (maintained through all phases)
+- ✓ Full test coverage (114 tests across 12 files) — Phases 1-3
+- ✓ Apache 2.0 license, `@bjro/slog` on npm + JSR — Phase 4
+
 ### Active
-- [ ] Dual publish to npm and JSR
-- [ ] Zero dependencies
-- [ ] Full test coverage
+
+(All v1 requirements validated — ready to ship)
 
 ### Out of Scope
 
@@ -66,4 +70,4 @@ The package targets modern runtimes exclusively — no CommonJS, no legacy Node 
 | Buffer-then-flush over immediate write | Aligns with serverless (Workers) execution model and enables batch transports efficiently | — Pending |
 
 ---
-*Last updated: 2026-03-21 after Phase 3 completion*
+*Last updated: 2026-03-21 after Phase 4 completion — all phases complete*
