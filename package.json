@@ -5,6 +5,19 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./hono": {
+      "import": "./dist/hono.js",
+      "types": "./dist/hono.d.ts"
+    }
+  },
+  "peerDependencies": {
+    "hono": ">=4.0.0"
+  },
   "scripts": {
     "test": "vitest run",
     "build": "tsc"
@@ -22,6 +35,7 @@
   "homepage": "https://github.com/roobie/slog#readme",
   "devDependencies": {
     "@types/node": "^25.5.0",
+    "hono": "^4.12.8",
     "typescript": "^5.9.3",
     "vitest": "^4.1.0"
   }
