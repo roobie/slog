@@ -30,14 +30,14 @@ Correct exports map, TypeScript declarations, explicit return types for JSR slow
 - CI also runs tests + `tsc --noEmit` + `attw` before publishing
 
 ### Package Identity
-- npm name: `@br/slog`
-- JSR name: `@br/slog` (consistent across both registries)
+- npm name: `@bjro/slog`
+- JSR name: `@bjro/slog` (consistent across both registries)
 - License: Apache 2.0 (explicit patent grant, superior to MIT)
 - Add LICENSE file with Apache 2.0 text
 - Update package.json: name, license, author fields
 
 ### JSR Compliance
-- Create `jsr.json` with name `@br/slog`, exports map matching package.json
+- Create `jsr.json` with name `@bjro/slog`, exports map matching package.json
 - Audit all public API functions and add explicit return type annotations where missing
 - Run `jsr publish --dry-run` to verify no slow types errors
 - `hono` listed as JSR `peerDependency` equivalent
