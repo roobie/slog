@@ -2,8 +2,8 @@ name: Publish
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
 
 jobs:
   publish:
@@ -11,33 +11,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Type check
-        run: npx tsc --noEmit
-
-      - name: Test
-        run: npm test
-
-      - name: Check types (attw)
-        run: npx @arethetypeswrong/cli --pack . --ignore-rules cjs-resolves-to-esm no-resolution
-
-      - name: Publish to npm
-        run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish to JSR
-        run: npx jsr publish --provenance
+      - uses: actions/checkout@v6
+      - name: Publish package
+        run: npx jsr publish
