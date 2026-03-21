@@ -2,3 +2,4 @@ export type { LogLevel, LogEntry, Plugin, Transport, Logger, LoggerOptions } fro
 export { LOG_LEVELS } from './levels.ts';
 export { createLogger } from './logger.ts';
 export { errorSerializer, createRedactPlugin, createLevelFilterPlugin, createFieldEnrichPlugin } from './plugins/index.ts';
+export { createConsoleTransport } from './transports/index.ts';
