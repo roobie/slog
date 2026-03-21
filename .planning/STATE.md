@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: "Completed 04-02-PLAN.md (checkpoint:human-verify Task 2 pending)"
-last_updated: "2026-03-21T16:55:34.318Z"
+stopped_at: Completed 04-02-PLAN.md
+last_updated: "2026-03-21T16:58:59.068Z"
 progress:
   total_phases: 4
   completed_phases: 4
@@ -56,6 +56,7 @@ Plan: 1 of 2
 | Phase 03-hono-integration P02 | 2 | 2 tasks | 2 files |
 | Phase 04-packaging-and-publishing P01 | 2 | 2 tasks | 5 files |
 | Phase 04-packaging-and-publishing P02 | 2 | 1 tasks | 1 files |
+| Phase 04-packaging-and-publishing P02 | 15 | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,7 @@ Recent decisions affecting current work:
 - [Phase 04-packaging-and-publishing]: npm publish uses NPM_TOKEN secret (not OIDC trusted publishing) — OIDC requires package to exist on npm first
 - [Phase 04-packaging-and-publishing]: JSR publish uses OIDC with id-token: write — no token needed once repo is linked in JSR settings
 - [Phase 04-packaging-and-publishing]: attw node10 failure is expected for TS-source-only packages without main field; node16 and bundler profiles pass
+- [Phase 04-packaging-and-publishing]: attw --ignore-rules cjs-resolves-to-esm no-resolution used in CI — TS-source-only packages without main field trigger node10 resolution failures that are not actionable
 
 ### Pending Todos
 
@@ -107,6 +109,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-21T16:55:34.315Z
-Stopped at: Completed 04-02-PLAN.md (checkpoint:human-verify Task 2 pending)
+Last session: 2026-03-21T16:58:59.066Z
+Stopped at: Completed 04-02-PLAN.md
 Resume file: None

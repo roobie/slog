@@ -50,7 +50,7 @@ completed: 2026-03-21
 - **Duration:** ~4 min
 - **Started:** 2026-03-21T16:52:52Z
 - **Completed:** 2026-03-21T16:57:00Z
-- **Tasks:** 1 of 2 completed (Task 2 is checkpoint:human-verify)
+- **Tasks:** 2 of 2 completed
 - **Files modified:** 1
 
 ## Accomplishments
@@ -64,8 +64,10 @@ completed: 2026-03-21
 Each task was committed atomically:
 
 1. **Task 1: Create GitHub Actions publish workflow and run local verification** - `901b597` (feat)
+2. **Task 1 deviation: Fix attw no-resolution ignore rule in CI step** - `40d0bef` (fix)
+3. **Task 2: Verify package readiness** - checkpoint approved by user (no code commit)
 
-**Plan metadata:** (pending — awaiting human-verify checkpoint)
+**Plan metadata:** `63557fe` (docs: complete publish workflow plan)
 
 ## Files Created/Modified
 - `.github/workflows/publish.yml` - Tag-triggered dual-registry publish with sequential CI gates
@@ -78,7 +80,20 @@ Each task was committed atomically:
 
 ## Deviations from Plan
 
-None - plan executed exactly as written.
+### Auto-fixed Issues
+
+**1. [Rule 1 - Bug] Added no-resolution to attw ignore-rules in CI step**
+- **Found during:** Task 1 (workflow creation) — identified when user reviewed CI and ran attw locally
+- **Issue:** attw CI step was missing `no-resolution` in `--ignore-rules` flag, causing node10 "Resolution failed" entries to potentially fail the gate
+- **Fix:** Added `no-resolution` to the attw step: `--ignore-rules cjs-resolves-to-esm no-resolution`
+- **Files modified:** `.github/workflows/publish.yml`
+- **Verification:** User confirmed `attw: all green (with --ignore-rules cjs-resolves-to-esm no-resolution)` during Task 2 verification
+- **Committed in:** `40d0bef` (fix(04-02))
+
+---
+
+**Total deviations:** 1 auto-fixed (Rule 1 - bug)
+**Impact on plan:** Fix essential for CI attw gate to work correctly with TS-source-only package. No scope creep.
 
 ## Issues Encountered
 - JSR dry-run initially failed with "Aborting due to uncommitted changes" — resolved by committing `.github/workflows/publish.yml` first, then re-running dry-run
@@ -121,6 +136,13 @@ Before first publish, the following external services require manual configurati
 - Publish workflow complete — ready to trigger on first v1.0.0 tag push after external service setup
 - All pre-publish checks (tsc, vitest 114 tests, attw, jsr dry-run) pass locally
 - Package is ready for first publish pending user setup of npm scope and JSR scope
+
+## Self-Check: PASSED
+
+- 04-02-SUMMARY.md: FOUND
+- Commit 901b597 (feat: publish workflow): FOUND
+- Commit 40d0bef (fix: attw ignore-rules): FOUND
+- Commit 63557fe (docs: plan metadata): FOUND
 
 ---
 *Phase: 04-packaging-and-publishing*
