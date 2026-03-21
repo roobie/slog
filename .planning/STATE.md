@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 02-transport-system/02-03-PLAN.md
-last_updated: "2026-03-21T02:10:47.748Z"
+stopped_at: Completed 03-hono-integration/03-01-PLAN.md
+last_updated: "2026-03-21T02:29:00.118Z"
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 7
+  completed_plans: 6
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-20)
 
 **Core value:** Structured logging that works everywhere with zero configuration — import, create, log.
-**Current focus:** Phase 03 — developer-experience (next)
+**Current focus:** Phase 03 — hono-integration
 
 ## Current Position
 
-Phase: 02 (transport-system) — COMPLETE (all 3 plans done)
-Plan: 3 of 3 (02-01, 02-02, and 02-03 complete)
+Phase: 03 (hono-integration) — EXECUTING
+Plan: 1 of 2
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Plan: 3 of 3 (02-01, 02-02, and 02-03 complete)
 | Phase 02-transport-system P01 | 3 | 2 tasks | 6 files |
 | Phase 02-transport-system P02 | 6 | 2 tasks | 6 files |
 | Phase 02-transport-system P03 | 4 | 2 tasks | 1 files |
+| Phase 03-hono-integration P01 | 3 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,9 @@ Recent decisions affecting current work:
 - [Phase 02-transport-system 02-02]: atOrAboveLevel/exactLevel/belowLevel use LOG_LEVELS numeric map for O(1) level comparisons
 - [Phase 02-transport-system]: collectTransport adds flushCount getter to assert transport.flush() was called in integration tests
 - [Phase 02-transport-system]: All src/index.ts exports were complete from prior plans — no merge needed in plan 03
+- [Phase 03-hono-integration]: slogMiddleware accepts Logger instance (not LoggerOptions) — consumer pre-configures logger before passing in
+- [Phase 03-hono-integration]: getRuntimeKey() === 'workerd' guard for executionCtx.waitUntil() — optional chaining throws on non-Workers per hono issue #2649
+- [Phase 03-hono-integration]: Import from ./types.ts directly in hono.ts — avoids circular dependency with ./index.ts barrel
 
 ### Pending Todos
 
@@ -93,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-21T02:07:48.267Z
-Stopped at: Completed 02-transport-system/02-03-PLAN.md
+Last session: 2026-03-21T02:29:00.116Z
+Stopped at: Completed 03-hono-integration/03-01-PLAN.md
 Resume file: None

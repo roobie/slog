@@ -36,11 +36,11 @@
 
 ### Hono Integration
 
-- [ ] **HONO-01**: Hono middleware available via `slog/hono` subpath export
-- [ ] **HONO-02**: Per-request logger with auto-populated context (requestId, method, path, userAgent)
-- [ ] **HONO-03**: Request duration measurement and completion logging
-- [ ] **HONO-04**: Flush via `executionCtx.waitUntil()` for Cloudflare Workers
-- [ ] **HONO-05**: Logger accessible via Hono context (`c.get('logger')`)
+- [x] **HONO-01**: Hono middleware available via `slog/hono` subpath export
+- [x] **HONO-02**: Per-request logger with auto-populated context (requestId, method, path, userAgent)
+- [x] **HONO-03**: Request duration measurement and completion logging
+- [x] **HONO-04**: Flush via `executionCtx.waitUntil()` for Cloudflare Workers
+- [x] **HONO-05**: Logger accessible via Hono context (`c.get('logger')`)
 
 ### Packaging
 
@@ -107,11 +107,11 @@
 | TRAN-05 | Phase 2 | Complete |
 | TRAN-06 | Phase 2 | Complete |
 | TRAN-07 | Phase 2 | Complete |
-| HONO-01 | Phase 3 | Pending |
-| HONO-02 | Phase 3 | Pending |
-| HONO-03 | Phase 3 | Pending |
-| HONO-04 | Phase 3 | Pending |
-| HONO-05 | Phase 3 | Pending |
+| HONO-01 | Phase 3 | Complete |
+| HONO-02 | Phase 3 | Complete |
+| HONO-03 | Phase 3 | Complete |
+| HONO-04 | Phase 3 | Complete |
+| HONO-05 | Phase 3 | Complete |
 | PACK-01 | Phase 4 | Pending |
 | PACK-02 | Phase 4 | Pending |
 | PACK-03 | Phase 4 | Pending |
