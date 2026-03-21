@@ -61,7 +61,11 @@ Plans:
   2. Each request handler receives a child logger via `c.get('logger')` with `requestId`, `method`, `path`, and `userAgent` pre-populated
   3. A completion log entry with the request duration in milliseconds is written automatically when the response is sent
   4. In a Cloudflare Workers environment, `flush()` is registered with `executionCtx.waitUntil()` so buffered HTTP transport entries are not dropped after the response is sent
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Install hono, configure subpath exports, implement slogMiddleware
+- [ ] 03-02-PLAN.md — Middleware tests for HONO-01 through HONO-05
 
 ### Phase 4: Packaging and Publishing
 **Goal**: Users can install slog from npm or JSR and get correct TypeScript types for all subpath exports, with no runtime dependencies
@@ -82,5 +86,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Core Foundation | 2/2 | Complete   | 2026-03-20 |
 | 2. Transport System | 3/3 | Complete   | 2026-03-21 |
-| 3. Hono Integration | 0/TBD | Not started | - |
+| 3. Hono Integration | 0/2 | Not started | - |
 | 4. Packaging and Publishing | 0/TBD | Not started | - |
