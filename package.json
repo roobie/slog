@@ -1,6 +1,6 @@
 {
   "name": "@bjro/slog",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A dead-simple structured logger for ECMAScript runtimes",
   "type": "module",
   "exports": {
@@ -37,6 +37,25 @@
   "bugs": {
     "url": "https://github.com/roobie/slog/issues"
   },
+  "keywords": [
+    "logger",
+    "logging",
+    "structured-logging",
+    "json-logging",
+    "log",
+    "slog",
+    "typescript",
+    "hono",
+    "middleware",
+    "transport",
+    "plugin",
+    "redact",
+    "bun",
+    "deno",
+    "node",
+    "edge",
+    "cloudflare-workers"
+  ],
   "homepage": "https://github.com/roobie/slog#readme",
   "devDependencies": {
     "@types/node": "^25.5.0",
