@@ -12,14 +12,13 @@ Structured logging that works everywhere with zero configuration — import, cre
 
 ### Validated
 
-(None yet — ship to validate)
+- ✓ Universal structured logging core with 6-level filtering (trace/debug/info/warn/error/fatal) — Phase 1
+- ✓ Object-only API: `log.info({ message: 'hi', userId: 123 })` — Phase 1
+- ✓ `withContext()` for explicit child logger creation with merged immutable context — Phase 1
+- ✓ Plugin pipeline for transforming/filtering log entries (sync, named objects) — Phase 1
+- ✓ Built-in plugins: error serializer, redaction, level filter, field enrichment — Phase 1
 
 ### Active
-
-- [ ] Universal structured logging core with level filtering (debug/info/warn/error)
-- [ ] Object-only API: `log.info({ message: 'hi', userId: 123 })`
-- [ ] `withContext()` for explicit child logger creation with merged context
-- [ ] Plugin pipeline for transforming/filtering log entries
 - [ ] Transport system with buffer-then-flush pattern
 - [ ] Console transport (JSON to stdout)
 - [ ] Pretty console transport (human-readable with colors)
@@ -65,4 +64,4 @@ The package targets modern runtimes exclusively — no CommonJS, no legacy Node 
 | Buffer-then-flush over immediate write | Aligns with serverless (Workers) execution model and enables batch transports efficiently | — Pending |
 
 ---
-*Last updated: 2026-03-20 after initialization*
+*Last updated: 2026-03-21 after Phase 1 completion*
