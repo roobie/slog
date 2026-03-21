@@ -20,7 +20,9 @@ const LEVEL_COLOR: Record<LogLevel, string> = {
 
 const RESET = '\x1b[0m';
 
+/** Configuration for the pretty-print transport. */
 export interface PrettyTransportConfig {
+  /** Maximum number of characters to render for any single field value before truncating with `...`. Defaults to 120. */
   maxValueLength?: number;
 }
 
@@ -46,6 +48,11 @@ function formatFields(obj: Record<string, unknown>, maxLen: number): string {
     .join(' ');
 }
 
+/**
+ * Creates a transport that writes colorized, human-readable log output to the console.
+ * @param config - Optional pretty-print configuration.
+ * @returns A Transport that writes human-readable output.
+ */
 export function createPrettyTransport(config?: PrettyTransportConfig): Transport {
   const maxValueLength = config?.maxValueLength ?? 120;
 

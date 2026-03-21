@@ -2,6 +2,11 @@ import type { LogEntry, Plugin } from '../types.ts';
 import type { LogLevel } from '../types.ts';
 import { LOG_LEVELS } from '../levels.ts';
 
+/**
+ * Creates a plugin that drops log entries below the specified minimum severity level.
+ * @param minLevel - Minimum log level to allow through.
+ * @returns A Plugin that filters entries below minLevel.
+ */
 export function createLevelFilterPlugin(minLevel: LogLevel): Plugin {
   const threshold = LOG_LEVELS[minLevel];
   return {

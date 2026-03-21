@@ -1,3 +1,4 @@
+/** @module slog/hono — Hono middleware for per-request structured logging. */
 import { createMiddleware } from 'hono/factory';
 import { getRuntimeKey } from 'hono/adapter';
 import type { MiddlewareHandler } from 'hono';
@@ -5,6 +6,16 @@ import type { Logger } from './types.ts';
 
 export type { Logger } from './types.ts';
 
+/**
+ * Creates Hono middleware that attaches a per-request logger to the context and logs request completion.
+ *
+ * The middleware enriches a child logger with request metadata (request ID, method, path, user-agent),
+ * stores it at `c.get('logger')`, and emits an `info` entry on every response. If the handler throws,
+ * an `error` entry is also emitted. On Cloudflare Workers the flush is handed to `waitUntil`.
+ *
+ * @param logger - A preconfigured Logger instance to derive per-request child loggers from.
+ * @returns A Hono MiddlewareHandler.
+ */
 export function slogMiddleware(logger: Logger): MiddlewareHandler {
   return createMiddleware<{ Variables: { logger: Logger } }>(async (c, next) => {
     const requestLogger = logger.withContext({

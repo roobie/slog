@@ -1,8 +1,12 @@
 import type { LogEntry, Transport } from '../types.ts';
 
+/** Configuration for the HTTP batch transport. */
 export interface HttpBatchTransportConfig {
+  /** The URL to POST NDJSON batches to. */
   url: string;
+  /** Optional HTTP headers to include in every POST request. */
   headers?: Record<string, string>;
+  /** Interval in milliseconds between automatic flushes. When omitted, the transport only flushes on explicit flush() calls. */
   flushInterval?: number; // ms, optional auto-flush timer
 }
 
@@ -24,6 +28,11 @@ async function postWithRetry(url: string, body: string, headers: Record<string, 
   }
 }
 
+/**
+ * Creates a transport that buffers entries in memory and sends them as NDJSON batches via HTTP POST on flush.
+ * @param config - HTTP batch transport configuration.
+ * @returns A Transport that batches and sends entries over HTTP.
+ */
 export function createHttpBatchTransport(config: HttpBatchTransportConfig): Transport {
   const buffer: LogEntry[] = [];
   let timer: ReturnType<typeof setInterval> | undefined;

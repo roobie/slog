@@ -10,6 +10,7 @@ function serializeError(val: unknown): { name: string; message: string; stack?: 
   return { name: 'Error', message: String(val) };
 }
 
+/** Plugin that serializes Error instances in the `error` and `err` data fields into plain objects with name, message, and stack properties. */
 export const errorSerializer: Plugin = {
   name: 'errorSerializer',
   transform(entry: LogEntry): LogEntry {

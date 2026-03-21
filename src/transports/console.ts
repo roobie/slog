@@ -9,6 +9,10 @@ const CONSOLE_METHOD: Record<LogLevel, 'log' | 'info' | 'warn' | 'error'> = {
   fatal: 'error',
 };
 
+/**
+ * Creates a transport that writes JSON-serialized log entries to the console using level-appropriate methods.
+ * @returns A Transport that writes NDJSON to console.
+ */
 export function createConsoleTransport(): Transport {
   return {
     write(entry: LogEntry): void {

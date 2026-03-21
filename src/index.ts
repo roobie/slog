@@ -1,3 +1,4 @@
+/** @module slog — Structured logging for every JavaScript runtime. */
 export type { LogLevel, LogEntry, Plugin, Transport, Logger, LoggerOptions } from './types.ts';
 export { LOG_LEVELS } from './levels.ts';
 export { createLogger } from './logger.ts';

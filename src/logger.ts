@@ -90,6 +90,11 @@ class LoggerImpl implements Logger {
   }
 }
 
+/**
+ * Creates a new structured logger instance.
+ * @param options - Logger configuration (level, plugins, transports, context).
+ * @returns A Logger instance.
+ */
 export function createLogger(options?: LoggerOptions): Logger {
   return new LoggerImpl(options);
 }
