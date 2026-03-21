@@ -1,6 +1,7 @@
 {
   "name": "@bjro/slog",
   "version": "1.0.2",
+  "description": "Structured logging for every JavaScript runtime — zero config, pluggable transports, Hono middleware.",
   "exports": {
     ".": "./src/index.ts",
     "./hono": "./src/hono.ts"
