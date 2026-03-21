@@ -1,10 +1,11 @@
 import { createMiddleware } from 'hono/factory';
 import { getRuntimeKey } from 'hono/adapter';
+import type { MiddlewareHandler } from 'hono';
 import type { Logger } from './types.ts';
 
 export type { Logger } from './types.ts';
 
-export function slogMiddleware(logger: Logger) {
+export function slogMiddleware(logger: Logger): MiddlewareHandler {
   return createMiddleware<{ Variables: { logger: Logger } }>(async (c, next) => {
     const requestLogger = logger.withContext({
       requestId: c.req.header('cf-ray') ?? c.req.header('x-request-id') ?? crypto.randomUUID(),
