@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-21T01:18:48.808Z"
+stopped_at: Completed 02-transport-system/02-01-PLAN.md
+last_updated: "2026-03-21T02:04:02.344Z"
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  total_plans: 5
+  completed_plans: 4
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-20)
 
 **Core value:** Structured logging that works everywhere with zero configuration — import, create, log.
-**Current focus:** Phase 01 — core-foundation
+**Current focus:** Phase 02 — transport-system
 
 ## Current Position
 
-Phase: 01 (core-foundation) — EXECUTING
-Plan: 1 of 2
+Phase: 02 (transport-system) — EXECUTING
+Plan: 3 of 3 (02-01 and 02-02 complete)
 
 ## Performance Metrics
 
@@ -48,6 +48,7 @@ Plan: 1 of 2
 *Updated after each plan completion*
 | Phase 01-core-foundation P01 | 5 | 2 tasks | 9 files |
 | Phase 01-core-foundation P02 | 4 | 2 tasks | 10 files |
+| Phase 02-transport-system P01 | 3 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,10 @@ Recent decisions affecting current work:
 - [Phase 01-core-foundation]: Same-reference return optimization in plugins — return original entry when no transformation applied
 - [Phase 01-core-foundation]: Object.freeze snapshot in fieldEnrich captures copy at factory call time, prevents caller mutation bugs
 - [Phase 01-core-foundation]: errorSerializer checks both data.error and data.err keys, serializes both if present
+- [Phase 02-transport-system]: CONSOLE_METHOD duplicated in each transport file (not shared) — keeps factories self-contained
+- [Phase 02-transport-system]: message field omitted entirely from ConsoleTransport JSON when undefined — cleaner NDJSON output
+- [Phase 02-transport-system]: formatValue quotes strings with whitespace/double-quotes/equals; others bare — logfmt-compatible
+- [Phase 02-transport-system]: data fields win on key conflict with context in PrettyTransport merged field output
 
 ### Pending Todos
 
@@ -79,6 +84,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-21T01:18:48.806Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-transport-system/02-CONTEXT.md
+Last session: 2026-03-21T02:04:02.341Z
+Stopped at: Completed 02-transport-system/02-01-PLAN.md
+Resume file: None

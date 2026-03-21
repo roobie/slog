@@ -81,6 +81,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Core Foundation | 2/2 | Complete   | 2026-03-20 |
-| 2. Transport System | 0/3 | Planning complete | - |
+| 2. Transport System | 2/3 | In Progress|  |
 | 3. Hono Integration | 0/TBD | Not started | - |
 | 4. Packaging and Publishing | 0/TBD | Not started | - |
