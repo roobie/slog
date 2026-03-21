@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-stopped_at: Completed 02-transport-system/02-01-PLAN.md
-last_updated: "2026-03-21T02:04:02.344Z"
+status: executing
+stopped_at: Completed 02-transport-system/02-02-PLAN.md
+last_updated: "2026-03-21T02:06:00Z"
 progress:
   total_phases: 4
   completed_phases: 1
@@ -30,15 +30,16 @@ Plan: 3 of 3 (02-01 and 02-02 complete)
 
 **Velocity:**
 
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: —
+- Total plans completed: 4
+- Average duration: ~6 min
+- Total execution time: ~24 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01-core-foundation | 2 | ~9 min | ~4.5 min |
+| 02-transport-system | 2 | ~12 min | ~6 min |
 
 **Recent Trend:**
 
@@ -49,6 +50,7 @@ Plan: 3 of 3 (02-01 and 02-02 complete)
 | Phase 01-core-foundation P01 | 5 | 2 tasks | 9 files |
 | Phase 01-core-foundation P02 | 4 | 2 tasks | 10 files |
 | Phase 02-transport-system P01 | 3 | 2 tasks | 6 files |
+| Phase 02-transport-system P02 | 6 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -71,6 +73,10 @@ Recent decisions affecting current work:
 - [Phase 02-transport-system]: message field omitted entirely from ConsoleTransport JSON when undefined — cleaner NDJSON output
 - [Phase 02-transport-system]: formatValue quotes strings with whitespace/double-quotes/equals; others bare — logfmt-compatible
 - [Phase 02-transport-system]: data fields win on key conflict with context in PrettyTransport merged field output
+- [Phase 02-transport-system 02-02]: Buffer spliced before POST to ensure entries dropped on failure, preventing duplicate delivery
+- [Phase 02-transport-system 02-02]: process?.on?.('exit') uses optional chaining for runtime portability (Workers lack process)
+- [Phase 02-transport-system 02-02]: Promise.allSettled in RoutedTransport.flush() — one transport failure never blocks others
+- [Phase 02-transport-system 02-02]: atOrAboveLevel/exactLevel/belowLevel use LOG_LEVELS numeric map for O(1) level comparisons
 
 ### Pending Todos
 
@@ -84,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-21T02:04:02.341Z
-Stopped at: Completed 02-transport-system/02-01-PLAN.md
+Last session: 2026-03-21T02:06:00Z
+Stopped at: Completed 02-transport-system/02-02-PLAN.md
 Resume file: None

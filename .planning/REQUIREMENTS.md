@@ -29,8 +29,8 @@
 - [x] **TRAN-01**: Transport interface with `flush(): Promise<void>` contract
 - [x] **TRAN-02**: Console transport (JSON.stringify each entry to appropriate console method)
 - [x] **TRAN-03**: Pretty console transport (human-readable with colors, timestamps, formatted data)
-- [ ] **TRAN-04**: HTTP batch transport (POST entries to configurable endpoint with headers and batch size)
-- [ ] **TRAN-05**: Built-in level-routed transport wrapper (route levels to different transports)
+- [x] **TRAN-04**: HTTP batch transport (POST entries to configurable endpoint with headers and batch size)
+- [x] **TRAN-05**: Built-in level-routed transport wrapper (route levels to different transports)
 - [ ] **TRAN-06**: Buffer-then-flush pattern: entries buffered in memory, sent to transports on flush()
 - [ ] **TRAN-07**: Transport errors caught and logged to console — one transport failure does not block others
 
@@ -103,8 +103,8 @@
 | TRAN-01 | Phase 2 | Complete |
 | TRAN-02 | Phase 2 | Complete |
 | TRAN-03 | Phase 2 | Complete |
-| TRAN-04 | Phase 2 | Pending |
-| TRAN-05 | Phase 2 | Pending |
+| TRAN-04 | Phase 2 | Complete |
+| TRAN-05 | Phase 2 | Complete |
 | TRAN-06 | Phase 2 | Pending |
 | TRAN-07 | Phase 2 | Pending |
 | HONO-01 | Phase 3 | Pending |
