@@ -18,11 +18,12 @@ Structured logging that works everywhere with zero configuration — import, cre
 - ✓ Plugin pipeline for transforming/filtering log entries (sync, named objects) — Phase 1
 - ✓ Built-in plugins: error serializer, redaction, level filter, field enrichment — Phase 1
 
+- ✓ Transport system with buffer-then-flush pattern — Phase 2
+- ✓ Console transport (NDJSON to stdout) — Phase 2
+- ✓ Pretty console transport (ANSI colors, logfmt key=value) — Phase 2
+- ✓ HTTP batch transport (NDJSON POST with retry) — Phase 2
+
 ### Active
-- [ ] Transport system with buffer-then-flush pattern
-- [ ] Console transport (JSON to stdout)
-- [ ] Pretty console transport (human-readable with colors)
-- [ ] HTTP batch transport (POST entries to endpoint)
 - [ ] Hono middleware integration (`slog/hono`) with per-request context
 - [ ] Cloudflare Workers support (waitUntil, cf-ray, executionCtx)
 - [ ] Subpath exports: `slog` (core), `slog/hono` (middleware)
@@ -64,4 +65,4 @@ The package targets modern runtimes exclusively — no CommonJS, no legacy Node 
 | Buffer-then-flush over immediate write | Aligns with serverless (Workers) execution model and enables batch transports efficiently | — Pending |
 
 ---
-*Last updated: 2026-03-21 after Phase 1 completion*
+*Last updated: 2026-03-21 after Phase 2 completion*
