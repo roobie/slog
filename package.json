@@ -1,34 +1,35 @@
 {
-  "name": "slog",
+  "name": "@bjro/slog",
   "version": "1.0.0",
   "description": "A dead-simple structured logger for ECMAScript runtimes",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
     },
     "./hono": {
-      "import": "./dist/hono.js",
-      "types": "./dist/hono.d.ts"
+      "types": "./src/hono.ts",
+      "import": "./src/hono.ts"
     }
+  },
+  "files": ["src", "LICENSE", "README.md"],
+  "publishConfig": {
+    "access": "public"
   },
   "peerDependencies": {
     "hono": ">=4.0.0"
   },
   "scripts": {
     "test": "vitest run",
-    "build": "tsc"
+    "typecheck": "tsc --noEmit"
   },
+  "license": "Apache-2.0",
+  "author": "bjro",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/roobie/slog.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/roobie/slog/issues"
   },
