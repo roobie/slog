@@ -17,28 +17,30 @@ export function slogMiddleware(logger: Logger) {
 
     const start = performance.now();
 
-    try {
-      await next();
-    } catch (err) {
+    await next();
+
+    // c.error is set by Hono's compose when a handler throws — it is caught
+    // internally by Hono before it can propagate to our try/catch, so we
+    // inspect c.error after next() instead.
+    if (c.error) {
       requestLogger.error({
         message: 'request failed',
-        error: err,
+        error: c.error,
       });
-      throw err;
-    } finally {
-      const duration = Math.round(performance.now() - start);
-      requestLogger.info({
-        message: 'request completed',
-        status: c.res.status,
-        duration,
-      });
+    }
 
-      const flushPromise = requestLogger.flush();
-      if (getRuntimeKey() === 'workerd') {
-        c.executionCtx.waitUntil(flushPromise);
-      } else {
-        await flushPromise;
-      }
+    const duration = Math.round(performance.now() - start);
+    requestLogger.info({
+      message: 'request completed',
+      status: c.res.status,
+      duration,
+    });
+
+    const flushPromise = requestLogger.flush();
+    if (getRuntimeKey() === 'workerd') {
+      c.executionCtx.waitUntil(flushPromise);
+    } else {
+      await flushPromise;
     }
   });
 }
