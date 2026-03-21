@@ -37,5 +37,8 @@ jobs:
       - name: Publish to npm
         run: npm publish --access public --provenance
 
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+
       - name: Publish to JSR
-        run: npx jsr publish
+        run: deno publish
