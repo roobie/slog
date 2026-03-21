@@ -1,6 +1,6 @@
 {
   "name": "@bjro/slog",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A dead-simple structured logger for ECMAScript runtimes",
   "type": "module",
   "exports": {

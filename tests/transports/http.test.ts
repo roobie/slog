@@ -12,15 +12,16 @@ function makeOkResponse() {
 
 describe('createHttpBatchTransport', () => {
   let fetchMock: ReturnType<typeof vi.fn>;
+  const originalFetch = globalThis.fetch;
 
   beforeEach(() => {
     fetchMock = vi.fn().mockImplementation(() => makeOkResponse());
-    vi.stubGlobal('fetch', fetchMock);
+    globalThis.fetch = fetchMock as unknown as typeof fetch;
     vi.useFakeTimers();
   });
 
   afterEach(() => {
-    vi.unstubAllGlobals();
+    globalThis.fetch = originalFetch;
     vi.useRealTimers();
   });
 
