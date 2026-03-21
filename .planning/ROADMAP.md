@@ -32,8 +32,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Project setup, types, levels, and core logger with plugin pipeline
-- [ ] 01-02-PLAN.md — Built-in plugins (error serializer, redaction, level filter, field enrichment)
+- [x] 01-01-PLAN.md — Project setup, types, levels, and core logger with plugin pipeline
+- [x] 01-02-PLAN.md — Built-in plugins (error serializer, redaction, level filter, field enrichment)
 
 ### Phase 2: Transport System
 **Goal**: Users can route log entries to stdout (JSON), a human-readable pretty output, or an HTTP endpoint — all via the buffer-then-flush pattern
@@ -45,7 +45,12 @@ Plans:
   3. `HttpBatchTransport` accumulates entries in memory and POSTs them as a batch to a configurable endpoint when `flush()` is called
   4. Calling `flush()` on a logger with multiple transports sends all buffered entries to all transports; a failure in one transport is caught and logged to console without blocking the others
   5. A level-routed transport wrapper can send `error`/`fatal` entries to one transport and lower levels to another
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Console and Pretty transports with barrel exports
+- [ ] 02-02-PLAN.md — HTTP batch transport and routed transport with predicate helpers
+- [ ] 02-03-PLAN.md — Integration tests for buffer-then-flush and error isolation
 
 ### Phase 3: Hono Integration
 **Goal**: Users can attach slog to a Hono app and receive a per-request child logger with automatic context, duration tracking, and correct flush behavior in Cloudflare Workers
@@ -76,6 +81,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Core Foundation | 2/2 | Complete   | 2026-03-20 |
-| 2. Transport System | 0/TBD | Not started | - |
+| 2. Transport System | 0/3 | Planning complete | - |
 | 3. Hono Integration | 0/TBD | Not started | - |
 | 4. Packaging and Publishing | 0/TBD | Not started | - |
