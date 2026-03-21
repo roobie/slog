@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Phase 4 context gathered
-last_updated: "2026-03-21T16:04:06.707Z"
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-03-21T16:51:44.073Z"
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 7
-  completed_plans: 7
+  total_plans: 9
+  completed_plans: 8
 ---
 
 # Project State
@@ -19,11 +19,11 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-20)
 
 **Core value:** Structured logging that works everywhere with zero configuration — import, create, log.
-**Current focus:** Phase 03 — hono-integration
+**Current focus:** Phase 04 — packaging-and-publishing
 
 ## Current Position
 
-Phase: 03 (hono-integration) — EXECUTING
+Phase: 04 (packaging-and-publishing) — EXECUTING
 Plan: 1 of 2
 
 ## Performance Metrics
@@ -54,6 +54,7 @@ Plan: 1 of 2
 | Phase 02-transport-system P03 | 4 | 2 tasks | 1 files |
 | Phase 03-hono-integration P01 | 3 | 2 tasks | 2 files |
 | Phase 03-hono-integration P02 | 2 | 2 tasks | 2 files |
+| Phase 04-packaging-and-publishing P01 | 2 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -86,6 +87,9 @@ Recent decisions affecting current work:
 - [Phase 03-hono-integration]: getRuntimeKey() === 'workerd' guard for executionCtx.waitUntil() — optional chaining throws on non-Workers per hono issue #2649
 - [Phase 03-hono-integration]: Import from ./types.ts directly in hono.ts — avoids circular dependency with ./index.ts barrel
 - [Phase 03-hono-integration]: Use c.error after await next() to detect handler errors in Hono middleware — Hono compose catches errors before they propagate to middleware catch blocks
+- [Phase 04-packaging-and-publishing]: Source-first exports: package.json and jsr.json export src/*.ts directly, no build step required
+- [Phase 04-packaging-and-publishing]: MiddlewareHandler return type added to slogMiddleware for JSR slow types compliance
+- [Phase 04-packaging-and-publishing]: Apache-2.0 license chosen over ISC for @bjro/slog package
 
 ### Pending Todos
 
@@ -99,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-21T16:04:06.705Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-packaging-and-publishing/04-CONTEXT.md
+Last session: 2026-03-21T16:51:44.071Z
+Stopped at: Completed 04-01-PLAN.md
+Resume file: None

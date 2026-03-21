@@ -44,13 +44,13 @@
 
 ### Packaging
 
-- [ ] **PACK-01**: Zero runtime dependencies
-- [ ] **PACK-02**: ESM-only output (no CommonJS)
-- [ ] **PACK-03**: Subpath exports: `slog` (core), `slog/hono` (middleware)
-- [ ] **PACK-04**: TypeScript declarations for all exports
+- [x] **PACK-01**: Zero runtime dependencies
+- [x] **PACK-02**: ESM-only output (no CommonJS)
+- [x] **PACK-03**: Subpath exports: `slog` (core), `slog/hono` (middleware)
+- [x] **PACK-04**: TypeScript declarations for all exports
 - [ ] **PACK-05**: Published to npm registry
 - [ ] **PACK-06**: Published to JSR registry
-- [ ] **PACK-07**: Explicit return type annotations for JSR slow types compliance
+- [x] **PACK-07**: Explicit return type annotations for JSR slow types compliance
 
 ## v2 Requirements
 
@@ -112,13 +112,13 @@
 | HONO-03 | Phase 3 | Complete |
 | HONO-04 | Phase 3 | Complete |
 | HONO-05 | Phase 3 | Complete |
-| PACK-01 | Phase 4 | Pending |
-| PACK-02 | Phase 4 | Pending |
-| PACK-03 | Phase 4 | Pending |
-| PACK-04 | Phase 4 | Pending |
+| PACK-01 | Phase 4 | Complete |
+| PACK-02 | Phase 4 | Complete |
+| PACK-03 | Phase 4 | Complete |
+| PACK-04 | Phase 4 | Complete |
 | PACK-05 | Phase 4 | Pending |
 | PACK-06 | Phase 4 | Pending |
-| PACK-07 | Phase 4 | Pending |
+| PACK-07 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 32 total
