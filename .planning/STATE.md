@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 04-01-PLAN.md
-last_updated: "2026-03-21T16:51:44.073Z"
+stopped_at: "Completed 04-02-PLAN.md (checkpoint:human-verify Task 2 pending)"
+last_updated: "2026-03-21T16:55:34.318Z"
 progress:
   total_phases: 4
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 9
-  completed_plans: 8
+  completed_plans: 9
 ---
 
 # Project State
@@ -55,6 +55,7 @@ Plan: 1 of 2
 | Phase 03-hono-integration P01 | 3 | 2 tasks | 2 files |
 | Phase 03-hono-integration P02 | 2 | 2 tasks | 2 files |
 | Phase 04-packaging-and-publishing P01 | 2 | 2 tasks | 5 files |
+| Phase 04-packaging-and-publishing P02 | 2 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,9 @@ Recent decisions affecting current work:
 - [Phase 04-packaging-and-publishing]: Source-first exports: package.json and jsr.json export src/*.ts directly, no build step required
 - [Phase 04-packaging-and-publishing]: MiddlewareHandler return type added to slogMiddleware for JSR slow types compliance
 - [Phase 04-packaging-and-publishing]: Apache-2.0 license chosen over ISC for @bjro/slog package
+- [Phase 04-packaging-and-publishing]: npm publish uses NPM_TOKEN secret (not OIDC trusted publishing) — OIDC requires package to exist on npm first
+- [Phase 04-packaging-and-publishing]: JSR publish uses OIDC with id-token: write — no token needed once repo is linked in JSR settings
+- [Phase 04-packaging-and-publishing]: attw node10 failure is expected for TS-source-only packages without main field; node16 and bundler profiles pass
 
 ### Pending Todos
 
@@ -103,6 +107,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-21T16:51:44.071Z
-Stopped at: Completed 04-01-PLAN.md
+Last session: 2026-03-21T16:55:34.315Z
+Stopped at: Completed 04-02-PLAN.md (checkpoint:human-verify Task 2 pending)
 Resume file: None

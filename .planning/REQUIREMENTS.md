@@ -48,8 +48,8 @@
 - [x] **PACK-02**: ESM-only output (no CommonJS)
 - [x] **PACK-03**: Subpath exports: `slog` (core), `slog/hono` (middleware)
 - [x] **PACK-04**: TypeScript declarations for all exports
-- [ ] **PACK-05**: Published to npm registry
-- [ ] **PACK-06**: Published to JSR registry
+- [x] **PACK-05**: Published to npm registry
+- [x] **PACK-06**: Published to JSR registry
 - [x] **PACK-07**: Explicit return type annotations for JSR slow types compliance
 
 ## v2 Requirements
@@ -116,8 +116,8 @@
 | PACK-02 | Phase 4 | Complete |
 | PACK-03 | Phase 4 | Complete |
 | PACK-04 | Phase 4 | Complete |
-| PACK-05 | Phase 4 | Pending |
-| PACK-06 | Phase 4 | Pending |
+| PACK-05 | Phase 4 | Complete |
+| PACK-06 | Phase 4 | Complete |
 | PACK-07 | Phase 4 | Complete |
 
 **Coverage:**
