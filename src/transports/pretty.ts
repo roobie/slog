@@ -1,14 +1,5 @@
 import type { LogEntry, LogLevel, Transport } from '../types.ts';
 
-const CONSOLE_METHOD: Record<LogLevel, 'log' | 'info' | 'warn' | 'error'> = {
-  trace: 'log',
-  debug: 'log',
-  info: 'info',
-  warn: 'warn',
-  error: 'error',
-  fatal: 'error',
-};
-
 const LEVEL_COLOR: Record<LogLevel, string> = {
   trace: '\x1b[2m', // dim
   debug: '\x1b[36m', // cyan
@@ -48,28 +39,30 @@ function formatFields(obj: Record<string, unknown>, maxLen: number): string {
     .join(' ');
 }
 
+export function formatPrettyEntry(entry: LogEntry, maxValueLength: number): string {
+  const isoTimestamp = new Date(entry.timestamp).toISOString();
+  const coloredLevel = `${LEVEL_COLOR[entry.level]}${entry.level.toUpperCase().padEnd(5)}${RESET}`;
+
+  const allFields: Record<string, unknown> = { ...entry.context, ...entry.data };
+  const fieldStr =
+    Object.keys(allFields).length > 0 ? ` ${formatFields(allFields, maxValueLength)}` : '';
+
+  const messagePart = entry.message !== undefined ? ` ${entry.message}` : '';
+
+  return `${isoTimestamp} [${coloredLevel}]${messagePart}${fieldStr}`;
+}
+
 /**
- * Creates a transport that writes colorized, human-readable log output to the console.
+ * Creates a transport that writes colorized, human-readable log output to stderr.
  * @param config - Optional pretty-print configuration.
- * @returns A Transport that writes human-readable output.
+ * @returns A Transport that writes human-readable output to stderr.
  */
 export function createPrettyTransport(config?: PrettyTransportConfig): Transport {
   const maxValueLength = config?.maxValueLength ?? 120;
 
   return {
     write(entry: LogEntry): void {
-      const method = CONSOLE_METHOD[entry.level];
-      const isoTimestamp = new Date(entry.timestamp).toISOString();
-      const coloredLevel = `${LEVEL_COLOR[entry.level]}${entry.level.toUpperCase().padEnd(5)}${RESET}`;
-
-      const allFields: Record<string, unknown> = { ...entry.context, ...entry.data };
-      const fieldStr =
-        Object.keys(allFields).length > 0 ? ` ${formatFields(allFields, maxValueLength)}` : '';
-
-      const messagePart = entry.message !== undefined ? ` ${entry.message}` : '';
-
-      const line = `${isoTimestamp} [${coloredLevel}]${messagePart}${fieldStr}`;
-      console[method](line);
+      console.error(formatPrettyEntry(entry, maxValueLength));
     },
     async flush(): Promise<void> {},
   };

@@ -1,3 +1,4 @@
+export { createBrowserConsoleTransport } from './browser-console.ts';
 export { createConsoleTransport } from './console.ts';
 export type { HttpBatchTransportConfig } from './http.ts';
 export { createHttpBatchTransport } from './http.ts';

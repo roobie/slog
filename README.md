@@ -145,8 +145,9 @@ The middleware automatically logs request completion with `status` and `duration
 | `createLogger(options?)` | `(options?: LoggerOptions) => Logger` | Create a logger instance |
 | `LOG_LEVELS` | `Record<LogLevel, number>` | Numeric level map |
 | `createConsoleTransport()` | `() => Transport` | JSON to stdout/console |
+| `createBrowserConsoleTransport()` | `() => Transport` | Formatted output using level-appropriate browser console methods |
 | `createNdjsonTransport(writeLine)` | `(writeLine: (line: string) => void \| Promise<void>) => Transport` | Newline-delimited JSON records to the provided writer on flush |
-| `createPrettyTransport()` | `() => Transport` | Formatted human-readable output |
+| `createPrettyTransport()` | `() => Transport` | Formatted human-readable output to stderr |
 | `createHttpBatchTransport(config)` | `(config: HttpBatchTransportConfig) => Transport` | Batched HTTP POST transport |
 | `createRoutedTransport(routes)` | `(routes: TransportRoute[]) => Transport` | Route entries to multiple transports |
 | `atOrAboveLevel(level)` | `(level: LogLevel) => MatchFn` | Route matcher |

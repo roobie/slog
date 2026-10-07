@@ -12,6 +12,7 @@ export type { HttpBatchTransportConfig, TransportRoute } from './transports/inde
 export {
   atOrAboveLevel,
   belowLevel,
+  createBrowserConsoleTransport,
   createConsoleTransport,
   createHttpBatchTransport,
   createNdjsonTransport,
