@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createStdIoTransport } from '../../src/transports/stdio.ts';
+import { createNdjsonTransport } from '../../src/index.ts';
 import type { LogEntry } from '../../src/types.ts';
 
 function makeEntry(message: string): LogEntry {
@@ -12,10 +12,10 @@ function makeEntry(message: string): LogEntry {
   };
 }
 
-describe('createStdIoTransport', () => {
+describe('createNdjsonTransport', () => {
   it('writes buffered entries as newline-terminated JSON records on flush', async () => {
     const output: string[] = [];
-    const transport = createStdIoTransport((line) => output.push(line));
+    const transport = createNdjsonTransport((line) => output.push(line));
 
     transport.write(makeEntry('first'));
     transport.write(makeEntry('second'));
@@ -34,7 +34,7 @@ describe('createStdIoTransport', () => {
     const firstWriteGate = new Promise<void>((resolve) => {
       releaseFirstWrite = resolve;
     });
-    const transport = createStdIoTransport(async (line) => {
+    const transport = createNdjsonTransport(async (line) => {
       output.push(line);
       if (output.length === 1) await firstWriteGate;
     });
@@ -54,7 +54,7 @@ describe('createStdIoTransport', () => {
   it('retains the failed record and following records for the next flush', async () => {
     const output: string[] = [];
     let failNextWrite = true;
-    const transport = createStdIoTransport((line) => {
+    const transport = createNdjsonTransport((line) => {
       if (failNextWrite) {
         failNextWrite = false;
         throw new Error('write failed');

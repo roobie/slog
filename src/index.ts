@@ -14,6 +14,7 @@ export {
   belowLevel,
   createConsoleTransport,
   createHttpBatchTransport,
+  createNdjsonTransport,
   createPrettyTransport,
   createRoutedTransport,
   exactLevel,

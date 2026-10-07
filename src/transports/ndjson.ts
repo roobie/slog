@@ -1,12 +1,12 @@
-import type { LogEntry, LogLevel, Transport } from '../types.ts';
+import type { LogEntry, Transport } from '../types.ts';
 
 /**
- * Creates a transport that buffers newline-terminated JSON records and writes them to `stderr` on flush.
- * @param writeStdErr - Writes one record, optionally asynchronously.
- * @returns A Transport that writes NDJSON to `stderr`.
+ * Creates a transport that buffers newline-delimited JSON records and writes them on flush.
+ * @param writeLine - Writes one record, optionally asynchronously.
+ * @returns A Transport that writes NDJSON records to the provided destination.
  */
-export function createStdIoTransport(
-  writeStdErr: (msg: string) => void | Promise<void>,
+export function createNdjsonTransport(
+  writeLine: (line: string) => void | Promise<void>,
 ): Transport {
   const buffer: string[] = [];
   let flushing: Promise<void> | undefined;
@@ -15,7 +15,7 @@ export function createStdIoTransport(
     while (true) {
       const line = buffer[0];
       if (line === undefined) return;
-      await writeStdErr(line);
+      await writeLine(line);
       buffer.shift();
     }
   }
