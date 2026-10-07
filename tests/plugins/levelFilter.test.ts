@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { createLevelFilterPlugin } from '../../src/plugins/levelFilter.ts';
 import type { LogEntry } from '../../src/types.ts';
 

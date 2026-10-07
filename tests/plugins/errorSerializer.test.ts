@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { errorSerializer } from '../../src/plugins/errorSerializer.ts';
 import type { LogEntry } from '../../src/types.ts';
 
@@ -11,18 +11,30 @@ describe('errorSerializer', () => {
     const entry = makeEntry({ error: new Error('test') });
     const result = errorSerializer.transform(entry);
     expect(result).not.toBeNull();
-    expect((result!.data.error as { name: string; message: string; stack: string }).name).toBe('Error');
-    expect((result!.data.error as { name: string; message: string; stack: string }).message).toBe('test');
-    expect((result!.data.error as { name: string; message: string; stack: string }).stack).toEqual(expect.any(String));
+    expect((result!.data.error as { name: string; message: string; stack: string }).name).toBe(
+      'Error',
+    );
+    expect((result!.data.error as { name: string; message: string; stack: string }).message).toBe(
+      'test',
+    );
+    expect((result!.data.error as { name: string; message: string; stack: string }).stack).toEqual(
+      expect.any(String),
+    );
   });
 
   it('serializes Error instance on data.err', () => {
     const entry = makeEntry({ err: new Error('err test') });
     const result = errorSerializer.transform(entry);
     expect(result).not.toBeNull();
-    expect((result!.data.err as { name: string; message: string; stack: string }).name).toBe('Error');
-    expect((result!.data.err as { name: string; message: string; stack: string }).message).toBe('err test');
-    expect((result!.data.err as { name: string; message: string; stack: string }).stack).toEqual(expect.any(String));
+    expect((result!.data.err as { name: string; message: string; stack: string }).name).toBe(
+      'Error',
+    );
+    expect((result!.data.err as { name: string; message: string; stack: string }).message).toBe(
+      'err test',
+    );
+    expect((result!.data.err as { name: string; message: string; stack: string }).stack).toEqual(
+      expect.any(String),
+    );
   });
 
   it('serializes TypeError with correct name', () => {

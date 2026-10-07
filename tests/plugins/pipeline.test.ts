@@ -1,13 +1,15 @@
-import { describe, it, expect, vi } from 'vitest';
-import { createLogger } from '../../src/index.ts';
+import { describe, expect, it, vi } from 'vitest';
 import type { LogEntry, Plugin, Transport } from '../../src/index.ts';
+import { createLogger } from '../../src/index.ts';
 
 function collectTransport() {
   const entries: LogEntry[] = [];
   return {
     entries,
     transport: {
-      write(entry: LogEntry) { entries.push(entry); },
+      write(entry: LogEntry) {
+        entries.push(entry);
+      },
       async flush() {},
     } satisfies Transport,
   };
@@ -20,8 +22,14 @@ function makePlugin(name: string, transform: (e: LogEntry) => LogEntry | null): 
 describe('plugin pipeline', () => {
   it('plugins execute in FIFO (array) order', async () => {
     const order: string[] = [];
-    const pluginA = makePlugin('A', (e) => { order.push('A'); return e; });
-    const pluginB = makePlugin('B', (e) => { order.push('B'); return e; });
+    const pluginA = makePlugin('A', (e) => {
+      order.push('A');
+      return e;
+    });
+    const pluginB = makePlugin('B', (e) => {
+      order.push('B');
+      return e;
+    });
     const col = collectTransport();
     const log = createLogger({ plugins: [pluginA, pluginB], transports: [col.transport] });
     log.info({ message: 'test' });
@@ -72,11 +80,23 @@ describe('null drops', () => {
 
   it('plugin returning null stops the pipeline — later plugins do not run', async () => {
     const order: string[] = [];
-    const pluginA = makePlugin('A', (e) => { order.push('A'); return e; });
-    const pluginNull = makePlugin('null', () => { order.push('null'); return null; });
-    const pluginC = makePlugin('C', (e) => { order.push('C'); return e; });
+    const pluginA = makePlugin('A', (e) => {
+      order.push('A');
+      return e;
+    });
+    const pluginNull = makePlugin('null', () => {
+      order.push('null');
+      return null;
+    });
+    const pluginC = makePlugin('C', (e) => {
+      order.push('C');
+      return e;
+    });
     const col = collectTransport();
-    const log = createLogger({ plugins: [pluginA, pluginNull, pluginC], transports: [col.transport] });
+    const log = createLogger({
+      plugins: [pluginA, pluginNull, pluginC],
+      transports: [col.transport],
+    });
     log.info({ message: 'test' });
     await log.flush();
     expect(order).toEqual(['A', 'null']);
@@ -87,7 +107,9 @@ describe('null drops', () => {
 describe('plugin error handling', () => {
   it('throwing plugin triggers console.warn with plugin name', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    const thrower = makePlugin('badPlugin', () => { throw new Error('oops'); });
+    const thrower = makePlugin('badPlugin', () => {
+      throw new Error('oops');
+    });
     const col = collectTransport();
     const log = createLogger({ plugins: [thrower], transports: [col.transport] });
     log.info({ message: 'test' });
@@ -101,8 +123,13 @@ describe('plugin error handling', () => {
   it('throwing plugin passes original entry to next plugin', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const originalEntry: LogEntry[] = [];
-    const thrower = makePlugin('thrower', () => { throw new Error('fail'); });
-    const downstream = makePlugin('downstream', (e) => { originalEntry.push(e); return e; });
+    const thrower = makePlugin('thrower', () => {
+      throw new Error('fail');
+    });
+    const downstream = makePlugin('downstream', (e) => {
+      originalEntry.push(e);
+      return e;
+    });
     const col = collectTransport();
     const log = createLogger({ plugins: [thrower, downstream], transports: [col.transport] });
     log.info({ message: 'test' });
@@ -117,7 +144,9 @@ describe('plugin error handling', () => {
 
   it('logging never crashes even when plugin throws', async () => {
     vi.spyOn(console, 'warn').mockImplementation(() => {});
-    const thrower = makePlugin('bad', () => { throw new Error('kaboom'); });
+    const thrower = makePlugin('bad', () => {
+      throw new Error('kaboom');
+    });
     const col = collectTransport();
     const log = createLogger({ plugins: [thrower], transports: [col.transport] });
     expect(() => log.info({ message: 'test' })).not.toThrow();

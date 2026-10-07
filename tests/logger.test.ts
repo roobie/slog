@@ -1,13 +1,15 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { createLogger } from '../src/index.ts';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { LogEntry, Plugin, Transport } from '../src/index.ts';
+import { createLogger } from '../src/index.ts';
 
 function collectTransport() {
   const entries: LogEntry[] = [];
   return {
     entries,
     transport: {
-      write(entry: LogEntry) { entries.push(entry); },
+      write(entry: LogEntry) {
+        entries.push(entry);
+      },
       async flush() {},
     } satisfies Transport,
   };
@@ -35,7 +37,14 @@ describe('log levels', () => {
     log.fatal({ message: 'fatal' });
     await log.flush();
     expect(col.entries).toHaveLength(6);
-    expect(col.entries.map(e => e.level)).toEqual(['trace', 'debug', 'info', 'warn', 'error', 'fatal']);
+    expect(col.entries.map((e) => e.level)).toEqual([
+      'trace',
+      'debug',
+      'info',
+      'warn',
+      'error',
+      'fatal',
+    ]);
   });
 });
 

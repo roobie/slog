@@ -1,11 +1,11 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import type { LogEntry } from '../../src/types.ts';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createPrettyTransport } from '../../src/transports/pretty.ts';
+import type { LogEntry } from '../../src/types.ts';
 
 function makeEntry(overrides: Partial<LogEntry> = {}): LogEntry {
   return {
     level: 'info',
-    timestamp: 1711008225123,  // 2024-03-21T10:23:45.123Z
+    timestamp: 1711008225123, // 2024-03-21T10:23:45.123Z
     message: 'test message',
     context: {},
     data: {},
@@ -111,10 +111,12 @@ describe('createPrettyTransport', () => {
   it('entry with context and data outputs both fields', () => {
     const spy = vi.spyOn(console, 'info').mockImplementation(() => {});
     const transport = createPrettyTransport();
-    transport.write(makeEntry({
-      context: { requestId: 'abc' },
-      data: { status: 200 },
-    }));
+    transport.write(
+      makeEntry({
+        context: { requestId: 'abc' },
+        data: { status: 200 },
+      }),
+    );
     const arg = spy.mock.calls[0][0] as string;
     expect(arg).toContain('requestId=abc');
     expect(arg).toContain('status=200');

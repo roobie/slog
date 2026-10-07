@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createLogger } from '../../src/index.ts';
 import { createConsoleTransport } from '../../src/transports/console.ts';
 import { createHttpBatchTransport } from '../../src/transports/http.ts';
@@ -9,10 +9,16 @@ function collectTransport() {
   let flushCount = 0;
   return {
     entries,
-    get flushCount() { return flushCount; },
+    get flushCount() {
+      return flushCount;
+    },
     transport: {
-      write(entry: LogEntry) { entries.push(entry); },
-      async flush() { flushCount++; },
+      write(entry: LogEntry) {
+        entries.push(entry);
+      },
+      async flush() {
+        flushCount++;
+      },
     } satisfies Transport,
   };
 }
@@ -22,8 +28,12 @@ function failingTransport() {
   return {
     entries,
     transport: {
-      write(entry: LogEntry) { entries.push(entry); },
-      async flush() { throw new Error('transport flush failed'); },
+      write(entry: LogEntry) {
+        entries.push(entry);
+      },
+      async flush() {
+        throw new Error('transport flush failed');
+      },
     } satisfies Transport,
   };
 }
@@ -146,9 +156,9 @@ describe('buffer-then-flush integration', () => {
   });
 
   it('integration with HttpBatchTransport', async () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(null, { status: 200 })
-    );
+    const fetchSpy = vi
+      .spyOn(globalThis, 'fetch')
+      .mockResolvedValue(new Response(null, { status: 200 }));
     try {
       const logger = createLogger({
         transports: [createHttpBatchTransport({ url: 'https://example.com/logs' })],

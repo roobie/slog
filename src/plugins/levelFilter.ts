@@ -1,6 +1,5 @@
-import type { LogEntry, Plugin } from '../types.ts';
-import type { LogLevel } from '../types.ts';
 import { LOG_LEVELS } from '../levels.ts';
+import type { LogEntry, LogLevel, Plugin } from '../types.ts';
 
 /**
  * Creates a plugin that drops log entries below the specified minimum severity level.

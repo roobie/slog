@@ -6,7 +6,7 @@ export interface LogEntry {
   /** Severity level of the entry. */
   level: LogLevel;
   /** Unix millisecond timestamp via Date.now(). */
-  timestamp: number;        // Unix ms via Date.now()
+  timestamp: number; // Unix ms via Date.now()
   /** Optional human-readable message. */
   message?: string;
   /** Contextual fields inherited from the logger or withContext(). */

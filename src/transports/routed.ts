@@ -1,5 +1,5 @@
-import type { LogEntry, LogLevel, Transport } from '../types.ts';
 import { LOG_LEVELS } from '../levels.ts';
+import type { LogEntry, LogLevel, Transport } from '../types.ts';
 
 /** A predicate-transport pair for routing log entries. */
 export interface TransportRoute {
@@ -24,7 +24,7 @@ export function createRoutedTransport(routes: TransportRoute[]): Transport {
       }
     },
     async flush(): Promise<void> {
-      await Promise.allSettled(routes.map(r => r.transport.flush()));
+      await Promise.allSettled(routes.map((r) => r.transport.flush()));
     },
   };
 }

@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import type { LogLevel, LogEntry } from '../../src/types.ts';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createHttpBatchTransport } from '../../src/transports/http.ts';
+import type { LogEntry, LogLevel } from '../../src/types.ts';
 
 function makeEntry(level: LogLevel = 'info'): LogEntry {
   return { level, timestamp: Date.now(), message: 'test', context: {}, data: {} };

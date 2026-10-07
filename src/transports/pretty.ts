@@ -10,12 +10,12 @@ const CONSOLE_METHOD: Record<LogLevel, 'log' | 'info' | 'warn' | 'error'> = {
 };
 
 const LEVEL_COLOR: Record<LogLevel, string> = {
-  trace: '\x1b[2m',   // dim
-  debug: '\x1b[36m',  // cyan
-  info: '\x1b[32m',   // green
-  warn: '\x1b[33m',   // yellow
-  error: '\x1b[31m',  // red
-  fatal: '\x1b[35m',  // magenta
+  trace: '\x1b[2m', // dim
+  debug: '\x1b[36m', // cyan
+  info: '\x1b[32m', // green
+  warn: '\x1b[33m', // yellow
+  error: '\x1b[31m', // red
+  fatal: '\x1b[35m', // magenta
 };
 
 const RESET = '\x1b[0m';
@@ -63,9 +63,8 @@ export function createPrettyTransport(config?: PrettyTransportConfig): Transport
       const coloredLevel = `${LEVEL_COLOR[entry.level]}${entry.level.toUpperCase().padEnd(5)}${RESET}`;
 
       const allFields: Record<string, unknown> = { ...entry.context, ...entry.data };
-      const fieldStr = Object.keys(allFields).length > 0
-        ? ' ' + formatFields(allFields, maxValueLength)
-        : '';
+      const fieldStr =
+        Object.keys(allFields).length > 0 ? ' ' + formatFields(allFields, maxValueLength) : '';
 
       const messagePart = entry.message !== undefined ? ` ${entry.message}` : '';
 

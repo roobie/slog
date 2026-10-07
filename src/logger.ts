@@ -1,5 +1,5 @@
-import type { LogEntry, LoggerOptions, Logger, Plugin, Transport, LogLevel } from './types.ts';
 import { LOG_LEVELS } from './levels.ts';
+import type { LogEntry, Logger, LoggerOptions, LogLevel, Plugin, Transport } from './types.ts';
 
 class LoggerImpl implements Logger {
   private readonly minLevel: LogLevel;
@@ -12,18 +12,31 @@ class LoggerImpl implements Logger {
     this.minLevel = options?.level ?? 'info';
     this.plugins = options?.plugins ?? [];
     this.transports = options?.transports ?? [];
-    this.context = options?.context != null
-      ? Object.freeze(Object.assign({}, options.context))
-      : Object.freeze({});
+    this.context =
+      options?.context != null
+        ? Object.freeze(Object.assign({}, options.context))
+        : Object.freeze({});
     this.buffer = [];
   }
 
-  trace(data: object): void { this.log('trace', data); }
-  debug(data: object): void { this.log('debug', data); }
-  info(data: object): void { this.log('info', data); }
-  warn(data: object): void { this.log('warn', data); }
-  error(data: object): void { this.log('error', data); }
-  fatal(data: object): void { this.log('fatal', data); }
+  trace(data: object): void {
+    this.log('trace', data);
+  }
+  debug(data: object): void {
+    this.log('debug', data);
+  }
+  info(data: object): void {
+    this.log('info', data);
+  }
+  warn(data: object): void {
+    this.log('warn', data);
+  }
+  error(data: object): void {
+    this.log('error', data);
+  }
+  fatal(data: object): void {
+    this.log('fatal', data);
+  }
 
   private log(level: LogLevel, data: object): void {
     // GATE FIRST — nothing above this line allocates
@@ -67,7 +80,7 @@ class LoggerImpl implements Logger {
     const frozenContext = Object.freeze(Object.assign({}, this.context, extraContext));
     return new LoggerImpl({
       level: this.minLevel,
-      plugins: this.plugins,      // same array reference — intentional
+      plugins: this.plugins, // same array reference — intentional
       transports: this.transports, // same array reference — intentional
       context: frozenContext,
     });
@@ -86,7 +99,7 @@ class LoggerImpl implements Logger {
       }
     }
 
-    await Promise.allSettled(this.transports.map(t => t.flush()));
+    await Promise.allSettled(this.transports.map((t) => t.flush()));
   }
 }
 
