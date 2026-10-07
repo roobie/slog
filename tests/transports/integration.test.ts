@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { createLogger } from '../../src/index.ts';
 import { createConsoleTransport } from '../../src/transports/console.ts';
 import { createHttpBatchTransport } from '../../src/transports/http.ts';
@@ -175,7 +175,9 @@ describe('buffer-then-flush integration', () => {
       const body = calledInit.body as string;
       const lines = body.trim().split('\n');
       expect(lines).toHaveLength(1);
-      const parsed = JSON.parse(lines[0]!) as Record<string, unknown>;
+      const firstLine = lines[0];
+      if (firstLine === undefined) throw new Error('Expected one response line');
+      const parsed = JSON.parse(firstLine) as Record<string, unknown>;
       expect(parsed).toHaveProperty('level', 'info');
       expect(parsed).toHaveProperty('message', 'http-test');
     } finally {

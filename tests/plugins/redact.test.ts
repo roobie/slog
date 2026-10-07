@@ -6,33 +6,37 @@ function makeEntry(data: Record<string, unknown>): LogEntry {
   return { level: 'info', timestamp: 1000, context: {}, data };
 }
 
+function assertNotNull<T>(value: T | null): asserts value is T {
+  if (value === null) throw new Error('Expected a transformed entry');
+}
+
 describe('createRedactPlugin', () => {
   it('redacts string-matched keys', () => {
     const plugin = createRedactPlugin(['password']);
     const entry = makeEntry({ password: 'secret123', user: 'jani' });
     const result = plugin.transform(entry);
-    expect(result).not.toBeNull();
-    expect(result!.data.password).toBe('[REDACTED]');
-    expect(result!.data.user).toBe('jani');
+    assertNotNull(result);
+    expect(result.data.password).toBe('[REDACTED]');
+    expect(result.data.user).toBe('jani');
   });
 
   it('redacts regex-matched keys', () => {
     const plugin = createRedactPlugin([/token/i]);
     const entry = makeEntry({ authToken: 'abc', user: 'jani' });
     const result = plugin.transform(entry);
-    expect(result).not.toBeNull();
-    expect(result!.data.authToken).toBe('[REDACTED]');
-    expect(result!.data.user).toBe('jani');
+    assertNotNull(result);
+    expect(result.data.authToken).toBe('[REDACTED]');
+    expect(result.data.user).toBe('jani');
   });
 
   it('handles mixed string and regex patterns', () => {
     const plugin = createRedactPlugin(['password', /secret/i]);
     const entry = makeEntry({ password: 'pw', mySecret: 'shh', user: 'jani' });
     const result = plugin.transform(entry);
-    expect(result).not.toBeNull();
-    expect(result!.data.password).toBe('[REDACTED]');
-    expect(result!.data.mySecret).toBe('[REDACTED]');
-    expect(result!.data.user).toBe('jani');
+    assertNotNull(result);
+    expect(result.data.password).toBe('[REDACTED]');
+    expect(result.data.mySecret).toBe('[REDACTED]');
+    expect(result.data.user).toBe('jani');
   });
 
   it('does not mutate original entry', () => {

@@ -28,7 +28,7 @@ export interface PrettyTransportConfig {
 
 function formatValue(val: unknown, maxLen: number): string {
   if (typeof val === 'string') {
-    const truncated = val.length > maxLen ? val.slice(0, maxLen) + '...' : val;
+    const truncated = val.length > maxLen ? `${val.slice(0, maxLen)}...` : val;
     // Quote if contains whitespace, double-quotes, or equals sign
     if (/[\s"=]/.test(truncated)) {
       return `"${truncated}"`;
@@ -37,7 +37,7 @@ function formatValue(val: unknown, maxLen: number): string {
   }
   if (typeof val === 'object') {
     const str = JSON.stringify(val);
-    return str.length > maxLen ? str.slice(0, maxLen) + '...' : str;
+    return str.length > maxLen ? `${str.slice(0, maxLen)}...` : str;
   }
   return String(val);
 }
@@ -64,7 +64,7 @@ export function createPrettyTransport(config?: PrettyTransportConfig): Transport
 
       const allFields: Record<string, unknown> = { ...entry.context, ...entry.data };
       const fieldStr =
-        Object.keys(allFields).length > 0 ? ' ' + formatFields(allFields, maxValueLength) : '';
+        Object.keys(allFields).length > 0 ? ` ${formatFields(allFields, maxValueLength)}` : '';
 
       const messagePart = entry.message !== undefined ? ` ${entry.message}` : '';
 
