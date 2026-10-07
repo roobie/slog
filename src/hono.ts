@@ -1,7 +1,8 @@
 /** @module slog/hono — Hono middleware for per-request structured logging. */
-import { createMiddleware } from 'hono/factory';
-import { getRuntimeKey } from 'hono/adapter';
+
 import type { MiddlewareHandler } from 'hono';
+import { getRuntimeKey } from 'hono/adapter';
+import { createMiddleware } from 'hono/factory';
 import type { Logger } from './types.ts';
 
 export type { Logger } from './types.ts';

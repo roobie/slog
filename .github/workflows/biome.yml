@@ -1,0 +1,33 @@
+name: Biome
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'biome.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/biome.yml'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'biome.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/biome.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  biome:
+    name: Check source with Biome
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx biome check src

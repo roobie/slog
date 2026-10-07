@@ -14,7 +14,7 @@ export function createRedactPlugin(patterns: Array<string | RegExp>): Plugin {
 
       for (const key of Object.keys(data)) {
         const shouldRedact = patterns.some((p) =>
-          typeof p === 'string' ? p === key : p.test(key)
+          typeof p === 'string' ? p === key : p.test(key),
         );
         if (shouldRedact) {
           data[key] = '[REDACTED]';

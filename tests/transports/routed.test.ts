@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest';
-import type { LogLevel, LogEntry, Transport } from '../../src/types.ts';
+import { describe, expect, it } from 'vitest';
 import {
-  createRoutedTransport,
   atOrAboveLevel,
-  exactLevel,
   belowLevel,
+  createRoutedTransport,
+  exactLevel,
 } from '../../src/transports/routed.ts';
+import type { LogEntry, LogLevel, Transport } from '../../src/types.ts';
 
 function makeEntry(level: LogLevel): LogEntry {
   return { level, timestamp: Date.now(), context: {}, data: {} };
@@ -16,10 +16,16 @@ function mockTransport() {
   let flushed = false;
   return {
     entries,
-    get flushed() { return flushed; },
+    get flushed() {
+      return flushed;
+    },
     transport: {
-      write(entry: LogEntry) { entries.push(entry); },
-      async flush() { flushed = true; },
+      write(entry: LogEntry) {
+        entries.push(entry);
+      },
+      async flush() {
+        flushed = true;
+      },
     } satisfies Transport,
   };
 }
@@ -27,9 +33,7 @@ function mockTransport() {
 describe('createRoutedTransport', () => {
   it('routes entry to transport when predicate returns true', () => {
     const mock = mockTransport();
-    const routed = createRoutedTransport([
-      { predicate: () => true, transport: mock.transport },
-    ]);
+    const routed = createRoutedTransport([{ predicate: () => true, transport: mock.transport }]);
     const entry = makeEntry('info');
     routed.write(entry);
     expect(mock.entries).toHaveLength(1);
@@ -38,9 +42,7 @@ describe('createRoutedTransport', () => {
 
   it('does not route entry when predicate returns false', () => {
     const mock = mockTransport();
-    const routed = createRoutedTransport([
-      { predicate: () => false, transport: mock.transport },
-    ]);
+    const routed = createRoutedTransport([{ predicate: () => false, transport: mock.transport }]);
     routed.write(makeEntry('info'));
     expect(mock.entries).toHaveLength(0);
   });
@@ -60,9 +62,7 @@ describe('createRoutedTransport', () => {
 
   it('entry matching no routes is silently dropped', () => {
     const mock = mockTransport();
-    const routed = createRoutedTransport([
-      { predicate: () => false, transport: mock.transport },
-    ]);
+    const routed = createRoutedTransport([{ predicate: () => false, transport: mock.transport }]);
     expect(() => routed.write(makeEntry('info'))).not.toThrow();
     expect(mock.entries).toHaveLength(0);
   });
@@ -83,7 +83,9 @@ describe('createRoutedTransport', () => {
   it('flush uses allSettled — one failure does not block others', async () => {
     const failing = {
       write(_: LogEntry) {},
-      async flush() { throw new Error('flush error'); },
+      async flush() {
+        throw new Error('flush error');
+      },
     } satisfies Transport;
     const mock = mockTransport();
     const routed = createRoutedTransport([

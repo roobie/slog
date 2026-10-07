@@ -19,14 +19,7 @@
     "redact"
   ],
   "publish": {
-    "include": [
-      "src/**/*.ts",
-      "LICENSE",
-      "README.md",
-      "jsr.json"
-    ],
-    "exclude": [
-      "**/*.test.ts"
-    ]
+    "include": ["src/**/*.ts", "LICENSE", "README.md", "jsr.json"],
+    "exclude": ["**/*.test.ts"]
   }
 }

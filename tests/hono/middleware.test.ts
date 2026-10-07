@@ -1,24 +1,33 @@
-import { describe, it, expect } from 'vitest';
 import { Hono } from 'hono';
+import { describe, expect, it } from 'vitest';
 import { slogMiddleware } from '../../src/hono.ts';
 import { createLogger } from '../../src/logger.ts';
 import type { LogEntry, Transport } from '../../src/types.ts';
+
+function assertDefined<T>(value: T | undefined): asserts value is T {
+  if (value === undefined) throw new Error('Expected a value');
+}
 
 function collectTransport() {
   const entries: LogEntry[] = [];
   let flushCount = 0;
   return {
     entries,
-    get flushCount() { return flushCount; },
+    get flushCount() {
+      return flushCount;
+    },
     transport: {
-      write(entry: LogEntry) { entries.push(entry); },
-      async flush() { flushCount++; },
+      write(entry: LogEntry) {
+        entries.push(entry);
+      },
+      async flush() {
+        flushCount++;
+      },
     } satisfies Transport,
   };
 }
 
 describe('slogMiddleware', () => {
-
   // HONO-01: Import and basic usage
   it('is importable and returns middleware', () => {
     expect(typeof slogMiddleware).toBe('function');
@@ -45,7 +54,7 @@ describe('slogMiddleware', () => {
     await app.request('/test');
 
     // The handler logged 'from handler', plus the middleware logs 'request completed'
-    const fromHandler = col.entries.find(e => e.message === 'from handler');
+    const fromHandler = col.entries.find((e) => e.message === 'from handler');
     expect(fromHandler).toBeDefined();
   });
 
@@ -64,7 +73,8 @@ describe('slogMiddleware', () => {
 
     // All entries from this request should have context from withContext()
     expect(col.entries.length).toBeGreaterThan(0);
-    const entry = col.entries[0]!;
+    const entry = col.entries[0];
+    assertDefined(entry);
     expect(typeof entry.context.requestId).toBe('string');
     expect((entry.context.requestId as string).length).toBeGreaterThan(0);
     expect(entry.context.method).toBe('GET');
@@ -85,8 +95,9 @@ describe('slogMiddleware', () => {
       headers: { 'cf-ray': 'abc123' },
     });
 
-    expect(col.entries.length).toBeGreaterThan(0);
-    expect(col.entries[0]!.context.requestId).toBe('abc123');
+    const entry = col.entries[0];
+    assertDefined(entry);
+    expect(entry.context.requestId).toBe('abc123');
   });
 
   // HONO-02 (requestId from headers): Falls back to x-request-id
@@ -102,8 +113,9 @@ describe('slogMiddleware', () => {
       headers: { 'x-request-id': 'req-456' },
     });
 
-    expect(col.entries.length).toBeGreaterThan(0);
-    expect(col.entries[0]!.context.requestId).toBe('req-456');
+    const entry = col.entries[0];
+    assertDefined(entry);
+    expect(entry.context.requestId).toBe('req-456');
   });
 
   // HONO-03: Completion log with duration and status
@@ -117,12 +129,12 @@ describe('slogMiddleware', () => {
 
     await app.request('/test');
 
-    const completed = col.entries.find(e => e.message === 'request completed');
-    expect(completed).toBeDefined();
-    expect(completed!.data.status).toBe(200);
-    expect(typeof completed!.data.duration).toBe('number');
-    expect((completed!.data.duration as number) >= 0).toBe(true);
-    expect(Number.isInteger(completed!.data.duration)).toBe(true);
+    const completed = col.entries.find((e) => e.message === 'request completed');
+    assertDefined(completed);
+    expect(completed.data.status).toBe(200);
+    expect(typeof completed.data.duration).toBe('number');
+    expect((completed.data.duration as number) >= 0).toBe(true);
+    expect(Number.isInteger(completed.data.duration)).toBe(true);
   });
 
   // HONO-04: Flush is called (non-workerd path)
@@ -154,10 +166,10 @@ describe('slogMiddleware', () => {
     const res = await app.request('/boom');
     expect(res.status).toBe(500);
 
-    const failed = col.entries.find(e => e.message === 'request failed');
+    const failed = col.entries.find((e) => e.message === 'request failed');
     expect(failed).toBeDefined();
 
-    const completed = col.entries.find(e => e.message === 'request completed');
+    const completed = col.entries.find((e) => e.message === 'request completed');
     expect(completed).toBeDefined();
 
     expect(col.flushCount).toBeGreaterThanOrEqual(1);
@@ -174,12 +186,11 @@ describe('slogMiddleware', () => {
 
     await app.request('/test');
 
-    const completed = col.entries.find(e => e.message === 'request completed');
-    expect(completed).toBeDefined();
-    const duration = completed!.data.duration as number;
+    const completed = col.entries.find((e) => e.message === 'request completed');
+    assertDefined(completed);
+    const duration = completed.data.duration as number;
     // Verify it equals Math.round of itself (i.e., it is already an integer)
     expect(duration).toBe(Math.round(duration));
     expect(duration === Math.floor(duration)).toBe(true);
   });
-
 });

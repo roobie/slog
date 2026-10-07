@@ -1,13 +1,19 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, expect, it } from 'vitest';
+import type { LogEntry, Transport } from '../src/index.ts';
 import { createLogger } from '../src/index.ts';
-import type { LogEntry, Plugin, Transport } from '../src/index.ts';
+
+function assertDefined<T>(value: T | undefined): asserts value is T {
+  if (value === undefined) throw new Error('Expected a value');
+}
 
 function collectTransport() {
   const entries: LogEntry[] = [];
   return {
     entries,
     transport: {
-      write(entry: LogEntry) { entries.push(entry); },
+      write(entry: LogEntry) {
+        entries.push(entry);
+      },
       async flush() {},
     } satisfies Transport,
   };
@@ -35,7 +41,14 @@ describe('log levels', () => {
     log.fatal({ message: 'fatal' });
     await log.flush();
     expect(col.entries).toHaveLength(6);
-    expect(col.entries.map(e => e.level)).toEqual(['trace', 'debug', 'info', 'warn', 'error', 'fatal']);
+    expect(col.entries.map((e) => e.level)).toEqual([
+      'trace',
+      'debug',
+      'info',
+      'warn',
+      'error',
+      'fatal',
+    ]);
   });
 });
 
@@ -98,13 +111,13 @@ describe('entry schema', () => {
     const after = Date.now();
     await log.flush();
     const entry = col.entries[0];
-    expect(entry).toBeDefined();
-    expect(entry!.level).toBe('info');
-    expect(entry!.timestamp).toBeGreaterThanOrEqual(before);
-    expect(entry!.timestamp).toBeLessThanOrEqual(after);
-    expect(entry!.message).toBe('hello');
-    expect(entry!.context).toEqual({});
-    expect(entry!.data).toEqual({ userId: 1 });
+    assertDefined(entry);
+    expect(entry.level).toBe('info');
+    expect(entry.timestamp).toBeGreaterThanOrEqual(before);
+    expect(entry.timestamp).toBeLessThanOrEqual(after);
+    expect(entry.message).toBe('hello');
+    expect(entry.context).toEqual({});
+    expect(entry.data).toEqual({ userId: 1 });
   });
 
   it('entry does NOT have an error field at the top level', async () => {
@@ -113,10 +126,10 @@ describe('entry schema', () => {
     log.error({ message: 'fail', error: new Error('oops') });
     await log.flush();
     const entry = col.entries[0];
-    expect(entry).toBeDefined();
-    expect('error' in entry!).toBe(false);
+    assertDefined(entry);
+    expect('error' in entry).toBe(false);
     // error lives in data
-    expect(entry!.data).toHaveProperty('error');
+    expect(entry.data).toHaveProperty('error');
   });
 });
 
@@ -145,7 +158,7 @@ describe('withContext', () => {
     const parent = createLogger({ context: parentContext, transports: [col.transport] });
     const child = parent.withContext({ service: 'api' });
     // Mutate after child creation
-    parentContext['injected'] = 'evil';
+    parentContext.injected = 'evil';
     child.info({ message: 'test' });
     await child.flush();
     expect(col.entries[0]?.context).not.toHaveProperty('injected');

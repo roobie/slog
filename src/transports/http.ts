@@ -10,9 +10,13 @@ export interface HttpBatchTransportConfig {
   flushInterval?: number; // ms, optional auto-flush timer
 }
 
-const sleep = (ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
-async function postWithRetry(url: string, body: string, headers: Record<string, string>): Promise<void> {
+async function postWithRetry(
+  url: string,
+  body: string,
+  headers: Record<string, string>,
+): Promise<void> {
   const init: RequestInit = { method: 'POST', headers, body };
   try {
     const res = await fetch(url, init);
@@ -47,7 +51,7 @@ export function createHttpBatchTransport(config: HttpBatchTransportConfig): Tran
 
       // Splice buffer before sending (concurrent flush safety)
       const entries = buffer.splice(0, buffer.length);
-      const body = entries.map(e => JSON.stringify(e)).join('\n');
+      const body = entries.map((e) => JSON.stringify(e)).join('\n');
       const headers: Record<string, string> = {
         'Content-Type': 'application/x-ndjson',
         ...config.headers,

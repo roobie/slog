@@ -10,12 +10,12 @@ const CONSOLE_METHOD: Record<LogLevel, 'log' | 'info' | 'warn' | 'error'> = {
 };
 
 const LEVEL_COLOR: Record<LogLevel, string> = {
-  trace: '\x1b[2m',   // dim
-  debug: '\x1b[36m',  // cyan
-  info: '\x1b[32m',   // green
-  warn: '\x1b[33m',   // yellow
-  error: '\x1b[31m',  // red
-  fatal: '\x1b[35m',  // magenta
+  trace: '\x1b[2m', // dim
+  debug: '\x1b[36m', // cyan
+  info: '\x1b[32m', // green
+  warn: '\x1b[33m', // yellow
+  error: '\x1b[31m', // red
+  fatal: '\x1b[35m', // magenta
 };
 
 const RESET = '\x1b[0m';
@@ -28,7 +28,7 @@ export interface PrettyTransportConfig {
 
 function formatValue(val: unknown, maxLen: number): string {
   if (typeof val === 'string') {
-    const truncated = val.length > maxLen ? val.slice(0, maxLen) + '...' : val;
+    const truncated = val.length > maxLen ? `${val.slice(0, maxLen)}...` : val;
     // Quote if contains whitespace, double-quotes, or equals sign
     if (/[\s"=]/.test(truncated)) {
       return `"${truncated}"`;
@@ -37,7 +37,7 @@ function formatValue(val: unknown, maxLen: number): string {
   }
   if (typeof val === 'object') {
     const str = JSON.stringify(val);
-    return str.length > maxLen ? str.slice(0, maxLen) + '...' : str;
+    return str.length > maxLen ? `${str.slice(0, maxLen)}...` : str;
   }
   return String(val);
 }
@@ -63,9 +63,8 @@ export function createPrettyTransport(config?: PrettyTransportConfig): Transport
       const coloredLevel = `${LEVEL_COLOR[entry.level]}${entry.level.toUpperCase().padEnd(5)}${RESET}`;
 
       const allFields: Record<string, unknown> = { ...entry.context, ...entry.data };
-      const fieldStr = Object.keys(allFields).length > 0
-        ? ' ' + formatFields(allFields, maxValueLength)
-        : '';
+      const fieldStr =
+        Object.keys(allFields).length > 0 ? ` ${formatFields(allFields, maxValueLength)}` : '';
 
       const messagePart = entry.message !== undefined ? ` ${entry.message}` : '';
 

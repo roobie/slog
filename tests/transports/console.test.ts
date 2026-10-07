@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import type { LogEntry } from '../../src/types.ts';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createConsoleTransport } from '../../src/transports/console.ts';
+import type { LogEntry } from '../../src/types.ts';
 
 function makeEntry(overrides: Partial<LogEntry> = {}): LogEntry {
   return {
@@ -88,17 +88,19 @@ describe('createConsoleTransport', () => {
     transport.write(makeEntry({ level: 'info', message: undefined }));
     const arg = spy.mock.calls[0][0] as string;
     const parsed = JSON.parse(arg);
-    expect(Object.prototype.hasOwnProperty.call(parsed, 'message')).toBe(false);
+    expect(Object.hasOwn(parsed, 'message')).toBe(false);
   });
 
   it('entry with context and data includes both in JSON output', () => {
     const spy = vi.spyOn(console, 'info').mockImplementation(() => {});
     const transport = createConsoleTransport();
-    transport.write(makeEntry({
-      level: 'info',
-      context: { requestId: 'abc' },
-      data: { userId: 123 },
-    }));
+    transport.write(
+      makeEntry({
+        level: 'info',
+        context: { requestId: 'abc' },
+        data: { userId: 123 },
+      }),
+    );
     const arg = spy.mock.calls[0][0] as string;
     const parsed = JSON.parse(arg);
     expect(parsed.context).toEqual({ requestId: 'abc' });
