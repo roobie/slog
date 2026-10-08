@@ -18,20 +18,22 @@ jsr add @bjro/slog
 import { createLogger, createConsoleTransport } from '@bjro/slog';
 
 const log = createLogger({
-  transport: createConsoleTransport(),
+  transports: [createConsoleTransport()],
 });
 
 log.info({ message: 'server started', port: 3000 });
 log.warn({ message: 'high memory', bytes: 1_048_576 });
 log.error({ message: 'request failed', error: new Error('timeout') });
+await log.flush();
 
 // Child logger with inherited context
 const reqLog = log.withContext({ requestId: 'abc123', userId: 42 });
 reqLog.info({ message: 'user action', action: 'login' });
-// => {"level":"info","requestId":"abc123","userId":42,"action":"login","message":"user action"}
+await reqLog.flush();
+// => {"level":"info","timestamp":1711008225123,"context":{"requestId":"abc123","userId":42},"data":{"action":"login"},"message":"user action"}
 ```
 
-`createLogger()` with no arguments works immediately — logs JSON to stdout.
+A logger with no configured transports does not write output. Add a transport with the `transports` option and call `flush()` to deliver buffered entries.
 
 ## Transports
 
@@ -40,9 +42,10 @@ reqLog.info({ message: 'user action', action: 'login' });
 ```typescript
 import { createLogger, createConsoleTransport } from '@bjro/slog';
 
-const log = createLogger({ transport: createConsoleTransport() });
+const log = createLogger({ transports: [createConsoleTransport()] });
 log.info({ message: 'hello' });
-// => {"level":"info","message":"hello"}
+await log.flush();
+// => {"level":"info","timestamp":1711008225123,"context":{},"data":{},"message":"hello"}
 ```
 
 ### Pretty Transport (human-readable)
@@ -50,9 +53,36 @@ log.info({ message: 'hello' });
 ```typescript
 import { createLogger, createPrettyTransport } from '@bjro/slog';
 
-const log = createLogger({ transport: createPrettyTransport() });
+const log = createLogger({ transports: [createPrettyTransport()] });
 log.info({ message: 'server started', port: 3000 });
-// => INFO  server started  port=3000
+await log.flush();
+// => 2024-03-21T10:23:45.123Z [INFO ] server started port=3000 (written to stderr)
+```
+
+### NDJSON Transport
+
+Provide a line writer to choose the destination. This Node.js example writes newline-delimited JSON to stderr; each line includes its trailing newline.
+
+```typescript
+import { createLogger, createNdjsonTransport } from '@bjro/slog';
+
+const log = createLogger({
+  transports: [createNdjsonTransport((line) => { process.stderr.write(line); })],
+});
+log.info({ message: 'server started', port: 3000 });
+await log.flush();
+```
+
+### Browser Console Transport
+
+Use this transport when you want formatted output routed through severity-specific console methods in browser DevTools.
+
+```typescript
+import { createLogger, createBrowserConsoleTransport } from '@bjro/slog';
+
+const log = createLogger({ transports: [createBrowserConsoleTransport()] });
+log.warn({ message: 'slow request', durationMs: 1200 });
+await log.flush();
 ```
 
 ### HTTP Batch Transport
@@ -61,13 +91,15 @@ log.info({ message: 'server started', port: 3000 });
 import { createLogger, createHttpBatchTransport } from '@bjro/slog';
 
 const log = createLogger({
-  transport: createHttpBatchTransport({
+  transports: [createHttpBatchTransport({
     url: 'https://logs.example.com/ingest',
-    batchSize: 100,
     flushInterval: 5000,
     headers: { Authorization: 'Bearer token' },
-  }),
+  })],
 });
+
+log.info({ message: 'batching logs' });
+await log.flush();
 ```
 
 ### Routed Transport
@@ -83,11 +115,14 @@ import {
 } from '@bjro/slog';
 
 const log = createLogger({
-  transport: createRoutedTransport([
-    { match: belowLevel('error'), transport: createConsoleTransport() },
-    { match: atOrAboveLevel('error'), transport: createHttpBatchTransport({ url: '...' }) },
-  ]),
+  transports: [createRoutedTransport([
+    { predicate: belowLevel('error'), transport: createConsoleTransport() },
+    { predicate: atOrAboveLevel('error'), transport: createHttpBatchTransport({ url: '...' }) },
+  ])],
 });
+
+log.info({ message: 'request handled' });
+await log.flush();
 ```
 
 ## Plugins
@@ -103,7 +138,7 @@ import {
 } from '@bjro/slog';
 
 const log = createLogger({
-  transport: createConsoleTransport(),
+  transports: [createConsoleTransport()],
   plugins: [
     errorSerializer,                              // serialize Error objects
     createRedactPlugin(['password', 'token']),    // redact sensitive fields
@@ -113,18 +148,20 @@ const log = createLogger({
 });
 
 log.error({ message: 'auth failed', error: new Error('invalid token') });
+await log.flush();
 // error.message and error.stack serialized automatically
 ```
 
 ## Hono Integration
 
 ```typescript
+import { Hono } from 'hono';
 import { createLogger, createConsoleTransport } from '@bjro/slog';
-import { slogMiddleware } from '@bjro/slog/hono';
+import { slogMiddleware, type Logger } from '@bjro/slog/hono';
 
-const logger = createLogger({ transport: createConsoleTransport() });
+const logger = createLogger({ transports: [createConsoleTransport()] });
 
-const app = new Hono();
+const app = new Hono<{ Variables: { logger: Logger } }>();
 app.use('*', slogMiddleware(logger));
 
 app.get('/', (c) => {
@@ -144,15 +181,15 @@ The middleware automatically logs request completion with `status` and `duration
 |--------|------|-------------|
 | `createLogger(options?)` | `(options?: LoggerOptions) => Logger` | Create a logger instance |
 | `LOG_LEVELS` | `Record<LogLevel, number>` | Numeric level map |
-| `createConsoleTransport()` | `() => Transport` | JSON to stdout/console |
+| `createConsoleTransport()` | `() => Transport` | JSON via level-appropriate console methods (stdout/stderr in Node.js) |
 | `createBrowserConsoleTransport()` | `() => Transport` | Formatted output using level-appropriate browser console methods |
 | `createNdjsonTransport(writeLine)` | `(writeLine: (line: string) => void \| Promise<void>) => Transport` | Newline-delimited JSON records to the provided writer on flush |
 | `createPrettyTransport()` | `() => Transport` | Formatted human-readable output to stderr |
 | `createHttpBatchTransport(config)` | `(config: HttpBatchTransportConfig) => Transport` | Batched HTTP POST transport |
 | `createRoutedTransport(routes)` | `(routes: TransportRoute[]) => Transport` | Route entries to multiple transports |
-| `atOrAboveLevel(level)` | `(level: LogLevel) => MatchFn` | Route matcher |
-| `exactLevel(level)` | `(level: LogLevel) => MatchFn` | Route matcher |
-| `belowLevel(level)` | `(level: LogLevel) => MatchFn` | Route matcher |
+| `atOrAboveLevel(level)` | `(level: LogLevel) => (entry: LogEntry) => boolean` | Route predicate |
+| `exactLevel(level)` | `(level: LogLevel) => (entry: LogEntry) => boolean` | Route predicate |
+| `belowLevel(level)` | `(level: LogLevel) => (entry: LogEntry) => boolean` | Route predicate |
 | `errorSerializer` | `Plugin` | Serialize Error objects in `error`/`err` fields |
 | `createRedactPlugin(keys)` | `(keys: string[]) => Plugin` | Redact field values |
 | `createFieldEnrichPlugin(fields)` | `(fields: Record<string, unknown>) => Plugin` | Add static fields to every entry |
